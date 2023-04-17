@@ -45,14 +45,17 @@ private: // メンバ変数
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
 	uint32_t textureHandle_ = 0;
-	//Sprite* sprite_ = nullptr;
+	//Sprite* sprite_ = nullptr; //2Dモデルの変数宣言
 
-	Model* model_ = nullptr;
-	// ワールドトランスフォーム
-	WorldTransform worldTransform_;
-	// ビュープロジェクション
-	ViewProjection viewProjection_;
+	//Model* model_ = nullptr; //3Dモデルの変数宣言
+	//// ワールドトランスフォーム
+	//WorldTransform worldTransform_;
+	//// ビュープロジェクション
+	//ViewProjection viewProjection_;
 
+	//サウンドデータハンドル
+	uint32_t soundDataHandle_ = 0; // サウンドデータの変数宣言
+	uint32_t
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>

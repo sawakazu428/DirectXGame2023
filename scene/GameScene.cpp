@@ -17,6 +17,7 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	textureHandle_ = TextureManager::Load("sample.png");
 	//sprite_ = Sprite::Create(textureHandle_, {100, 50});
+	
 	model_ = Model::Create();
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
