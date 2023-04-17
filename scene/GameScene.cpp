@@ -5,27 +5,35 @@
 GameScene::GameScene() {}
 
 GameScene::~GameScene() 
-{ 
-	//delete sprite_;
-	delete model_;
+{
+	delete model_; //modelの削除
 }
+
 
 void GameScene::Initialize() {
 
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
+	// ファイル名を	指定してテクスチャを読み込む
 	textureHandle_ = TextureManager::Load("sample.png");
-	//sprite_ = Sprite::Create(textureHandle_, {100, 50});
-	
+	// 3Dモデルの作成
 	model_ = Model::Create();
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
 	// ビュープロジェクションの初期化
 	viewProjection_.Initialize();
+	// 自キャラの作成
+	player_ = new Player();
+	// 自キャラの初期化
+	player_->Initialize(Model::Create(), TextureManager::Load("sample.png"));
 }
 
-void GameScene::Update() {}
+void GameScene::Update()
+{
+// 自キャラの更新
+	player_->Update();
+}
 
 void GameScene::Draw() {
 
@@ -53,8 +61,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-	// 3Dモデル描画
-	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
+	player_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
@@ -67,7 +74,6 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
-	//sprite_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
