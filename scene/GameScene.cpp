@@ -6,6 +6,7 @@ GameScene::GameScene() {}
 
 GameScene::~GameScene() 
 {
+	delete debugCamera_;
 }
 
 
@@ -14,11 +15,30 @@ void GameScene::Initialize() {
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
+
+	debugCamera_ = new DebugCamera_();
 }
 
-void GameScene::Update()
-{
+void GameScene::Update() {
 
+	debugCamera_->Update();
+
+#ifdef DEBUG
+	if (input_->Trigger(DIK_V)) {
+		isDebugCameraActive_ = true;
+	}
+
+#endif // DEBUG
+
+	// カメラの処理
+	if (isDebugCameraActive_) {
+		debugCamera_->Update();
+		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
+		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
+		viewProjection_.TransferMatrix();
+	} else {
+		viewProjection_.UpdateMatrix();
+	}
 }
 
 void GameScene::Draw() {
