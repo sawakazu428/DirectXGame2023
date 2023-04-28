@@ -1,5 +1,6 @@
 ﻿#include "GameScene.h"
 #include "TextureManager.h"
+#include "AxisIndicator.h"
 #include <cassert>
 
 GameScene::GameScene() {}
@@ -19,6 +20,12 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 
 	debugCamera_ = new DebugCamera(1000,1000);
+
+	// 軸方向表示の表示を有効にする
+	AxisIndicator::GetInstance()->SetVisible(true);
+	// 軸方向表示が参照するビュープロジェクションを指定する(アドレス渡し)
+	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
+
 }
 
 void GameScene::Update() {
