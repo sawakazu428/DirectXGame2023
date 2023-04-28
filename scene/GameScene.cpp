@@ -19,6 +19,19 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 
+		// ファイル名を	指定してテクスチャを読み込む
+	textureHandle_ = TextureManager::Load("sample.png");
+	// 3Dモデルの作成
+	model_ = Model::Create();
+	// ワールドトランスフォームの初期化
+	worldTransform_.Initialize();
+	// ビュープロジェクションの初期化
+	viewProjection_.Initialize();
+	// 自キャラの作成
+	player_ = new Player();
+	// 自キャラの初期化
+	player_->Initialize(Model::Create(), TextureManager::Load("sample.png"));
+
 	debugCamera_ = new DebugCamera(1000,1000);
 
 	// 軸方向表示の表示を有効にする
