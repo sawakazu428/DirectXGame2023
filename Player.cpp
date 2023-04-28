@@ -22,6 +22,7 @@ void Player::Update() {
 	// キャラクターの移動速さ
 	const float kCharacterSpeed = 0.2f;
 
+
 	// 押した方向で移動ベクトルを変更(左右)
 	if (input_->PushKey(DIK_LEFT)) 
 	{
@@ -37,6 +38,24 @@ void Player::Update() {
 		move.y -= kCharacterSpeed;
 	} else if (input_->PushKey(DIK_DOWN)) {
 		move.y += kCharacterSpeed;
+	}
+	// 回転速さ[ラジアン/frame]
+	const float kRotSpeed = 0.02f;
+
+	// 旋回、押した方向で移動ベクトルを変更
+	if (input_->PushKey(DIK_A)) {
+		worldTransform_.rotation_.y -= kRotSpeed;
+	} else if (input_->PushKey(DIK_D))
+	{
+		worldTransform_.rotation_.y += kRotSpeed;
+	}
+
+	Attack();
+
+	// 弾更新
+	if (bullet_) // if(bullet != nullptr)と同じ効果になる
+	{
+		bullet_->Update();
 	}
 
 	// 範囲制限
@@ -54,12 +73,7 @@ void Player::Update() {
 	worldTransform_.translation_.y += move.y; 
 	worldTransform_.translation_.z += move.z; 
 
-	// 全て掛け合わせたアフィン変換行列をワールド行列に代入する // 行列更新
-	worldTransform_.matWorld_ = MakeAffineMatrix(
-	    worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
-
-	// 行列を定数バッファに転送
-	worldTransform_.TransferMatrix();
+	worldTransform_.UpdateMatrix();
 
 	#ifdef DEBUG
 	// キャラクターの座標を画面表示する処理
@@ -94,4 +108,20 @@ void Player::Update() {
 void Player::Draw(ViewProjection& view) 
 {
 	model_->Draw(worldTransform_, view, textureHandle_);
+	if (bullet_) // if(bullet != nullptr)と同じ効果になる
+	{
+		bullet_->Draw(view);
+	}
+}
+
+void Player::Attack() 
+{
+	if (input_->TriggerKey(DIK_SPACE))
+	{
+		// 弾を生成し、初期化
+		PlayerBullet* newBullet = new PlayerBullet();
+		newBullet->Initialize(model_, worldTransform_.translation_);
+
+		bullet_ = newBullet;
+	}
 }
