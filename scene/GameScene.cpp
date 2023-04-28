@@ -12,11 +12,13 @@ GameScene::~GameScene()
 
 void GameScene::Initialize() {
 
+	player_->Update();
+
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 
-	debugCamera_ = new DebugCamera_();
+	debugCamera_ = new DebugCamera(1000,1000);
 }
 
 void GameScene::Update() {
