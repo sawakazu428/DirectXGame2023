@@ -15,7 +15,7 @@ void Player::Initialize(Model* model, uint32_t textureHandle) {
 	input_ = Input::GetInstance();
 }
 
-	void Player::Update() {
+void Player::Update() {
 	// キャラクターの移動ベクトル
 	Vector3 move = {0, 0, 0};
 
@@ -23,9 +23,12 @@ void Player::Initialize(Model* model, uint32_t textureHandle) {
 	const float kCharacterSpeed = 0.2f;
 
 	// 押した方向で移動ベクトルを変更(左右)
-	if (input_->PushKey(DIK_LEFT)) {
+	if (input_->PushKey(DIK_LEFT)) 
+	{
 		move.x -= kCharacterSpeed;
-	} else if (input_->PushKey(DIK_RIGHT)) {
+
+	} else if (input_->PushKey(DIK_RIGHT))
+	{
 		move.x += kCharacterSpeed;
 	}
 

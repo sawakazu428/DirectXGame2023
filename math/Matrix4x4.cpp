@@ -109,5 +109,6 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vecto
 
 	// 合成
 	Matrix4x4 result = matScale * matRot * matTrans;
-	
+
+	return result;
 };

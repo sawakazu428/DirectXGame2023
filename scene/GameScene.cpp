@@ -13,8 +13,6 @@ GameScene::~GameScene()
 
 void GameScene::Initialize() {
 
-	player_->Update();
-
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
@@ -30,9 +28,9 @@ void GameScene::Initialize() {
 	// 自キャラの作成
 	player_ = new Player();
 	// 自キャラの初期化
-	player_->Initialize(Model::Create(), TextureManager::Load("sample.png"));
+	player_->Initialize(model_, textureHandle_);
 
-	debugCamera_ = new DebugCamera(1000,1000);
+	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
 
 	// 軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
@@ -43,10 +41,12 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 
+	player_->Update();
+
 	debugCamera_->Update();
 
-#ifdef DEBUG
-	if (input_->Trigger(DIK_V)) {
+#ifdef _DEBUG
+	if (input_->TriggerKey(DIK_V)) {
 		isDebugCameraActive_ = true;
 	}
 
@@ -89,6 +89,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
+	player_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
