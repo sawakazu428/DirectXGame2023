@@ -6,7 +6,7 @@ void PlayerBullet::Initialize(Model* model, const Vector3& pos)
 
 	model_ = model;
 	// テクスチャ読み込み
-	textureHandle_ = TextureManager::Load("white.png");
+	textureHandle_ = TextureManager::Load("white1x1.png");
 
 
 	world_.Initialize();

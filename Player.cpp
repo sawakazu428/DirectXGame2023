@@ -19,6 +19,20 @@ void Player::Update() {
 	// キャラクターの移動ベクトル
 	Vector3 move = {0, 0, 0};
 
+	// キャラクター旋回処理
+	// 回転速さ[ラジアン/frame]
+	const float kRotSpeed = 0.02f;
+
+	// 旋回、押した方向で移動ベクトルを変更
+	if (input_->PushKey(DIK_A)) {
+		worldTransform_.rotation_.y -= kRotSpeed;
+	} else if (input_->PushKey(DIK_D))
+	{
+		worldTransform_.rotation_.y += kRotSpeed;
+	}
+
+
+	// キャラクター移動処理
 	// キャラクターの移動速さ
 	const float kCharacterSpeed = 0.2f;
 
@@ -35,21 +49,13 @@ void Player::Update() {
 
 	// 押した方向で移動ベクトル変更(上下)
 	if (input_->PushKey(DIK_UP)) {
-		move.y -= kCharacterSpeed;
-	} else if (input_->PushKey(DIK_DOWN)) {
 		move.y += kCharacterSpeed;
-	}
-	// 回転速さ[ラジアン/frame]
-	const float kRotSpeed = 0.02f;
-
-	// 旋回、押した方向で移動ベクトルを変更
-	if (input_->PushKey(DIK_A)) {
-		worldTransform_.rotation_.y -= kRotSpeed;
-	} else if (input_->PushKey(DIK_D))
-	{
-		worldTransform_.rotation_.y += kRotSpeed;
+	} else if (input_->PushKey(DIK_DOWN)) {
+		move.y -= kCharacterSpeed;
 	}
 
+	
+	// キャラクター攻撃処理
 	Attack();
 
 	// 弾更新
@@ -108,6 +114,8 @@ void Player::Update() {
 void Player::Draw(ViewProjection& view) 
 {
 	model_->Draw(worldTransform_, view, textureHandle_);
+
+	// 弾の描画
 	if (bullet_) // if(bullet != nullptr)と同じ効果になる
 	{
 		bullet_->Draw(view);
@@ -122,6 +130,7 @@ void Player::Attack()
 		PlayerBullet* newBullet = new PlayerBullet();
 		newBullet->Initialize(model_, worldTransform_.translation_);
 
+		// 弾を登録する
 		bullet_ = newBullet;
 	}
 }
