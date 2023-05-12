@@ -2,6 +2,14 @@
 #include "cassert"
 
 
+Player::~Player() 
+{
+	for (PlayerBullet* bullet : bullets_)
+	{
+		delete bullet;
+	}
+}
+
 void Player::Initialize(Model* model, uint32_t textureHandle) {
 	// NULLポイントチェック
 	assert(model);
@@ -59,10 +67,16 @@ void Player::Update() {
 	Attack();
 
 	// 弾更新
-	if (bullet_) // if(bullet != nullptr)と同じ効果になる
+	
+	for (PlayerBullet* bullet : bullets_)
 	{
-		bullet_->Update();
+		bullet->Update();
 	}
+
+	//if (bullet_) // if(bullet != nullptr)と同じ効果になる
+	//{
+	//	bullet_->Update();
+	//}
 
 	// 範囲制限
 	const float kMoveLimitX = 20.0f;
@@ -80,6 +94,11 @@ void Player::Update() {
 	worldTransform_.translation_.z += move.z; 
 
 	worldTransform_.UpdateMatrix();
+
+
+
+
+
 
 	#ifdef DEBUG
 	// キャラクターの座標を画面表示する処理
@@ -116,21 +135,28 @@ void Player::Draw(ViewProjection& view)
 	model_->Draw(worldTransform_, view, textureHandle_);
 
 	// 弾の描画
-	if (bullet_) // if(bullet != nullptr)と同じ効果になる
+	for (PlayerBullet* bullet : bullets_)
 	{
-		bullet_->Draw(view);
+		bullet->Draw(view);
 	}
+
+
+	//if (bullet_) // if(bullet != nullptr)と同じ効果になる
+	//{
+	//	bullet_->Draw(view);
+	//}
 }
 
 void Player::Attack() 
 {
 	if (input_->TriggerKey(DIK_SPACE))
 	{
+
 		// 弾を生成し、初期化
 		PlayerBullet* newBullet = new PlayerBullet();
 		newBullet->Initialize(model_, worldTransform_.translation_);
 
 		// 弾を登録する
-		bullet_ = newBullet;
+		bullets_.push_back(newBullet);
 	}
 }
