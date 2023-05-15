@@ -91,6 +91,7 @@ Matrix4x4 operator*(const Matrix4x4& m1, const Matrix4x4& m2) {
 	return result *= m2;
 }
 
+
 Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vector3& translate)
 {
 	// スケーリング行列
@@ -98,8 +99,8 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vecto
 
 	// 回転行列
 	Matrix4x4 matRotX = MakeRotateXMatrix(rot.x);
-	Matrix4x4 matRotY = MakeRotateXMatrix(rot.y);
-	Matrix4x4 matRotZ = MakeRotateXMatrix(rot.z);
+	Matrix4x4 matRotY = MakeRotateYMatrix(rot.y);
+	Matrix4x4 matRotZ = MakeRotateZMatrix(rot.z);
 
 	// 合成(X*Y*Z)
 	Matrix4x4 matRot = matRotZ * matRotX * matRotY;

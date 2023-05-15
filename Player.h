@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "PlayerBullet.h"
 #include<list>
+#include "MathUtility.h"
 
 /// <summary>
 /// 自キャラ
