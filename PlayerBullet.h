@@ -25,7 +25,7 @@ public:
 	/// <param name="viewProjection">ビュープロジェクション</param>
 	void Draw(const ViewProjection& view);
 
-	// デスフラグゲッター
+	// デスフラグのゲッター
 	bool IsDead() const { return isDead_; }
 
 	private:
