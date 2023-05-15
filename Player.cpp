@@ -159,7 +159,7 @@ void Player::Draw(ViewProjection& view)
 	//}
 }
 
-void Player::Attack() 
+void Player::Attack()	
 {
 	if (input_->TriggerKey(DIK_SPACE))
 	{	
