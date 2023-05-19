@@ -13,6 +13,10 @@ public:
 
 	void Draw(const ViewProjection& view);
 
+	void ApproachUpdate(const float kEnemySpeed);
+
+	void LeaveUpdate(const float kEnemySpeed);
+
 private:
     // ワールドトランスフォーム
 	WorldTransform worldTransformEnemy_;
@@ -23,4 +27,13 @@ private:
 
 	// 速度
 	Vector3 velocityEnemy_;
+
+// 行動フェーズ
+enum class Phase 
+{
+	Approach, // 接近する
+	Leave,    // 離脱する
 };
+	Phase phase_ = Phase::Approach;
+};
+
