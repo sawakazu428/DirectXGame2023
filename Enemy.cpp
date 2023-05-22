@@ -88,6 +88,7 @@ void Enemy::ApproachUpdate(const float kEnemySpeed) {
 	if (worldTransformEnemy_.translation_.z < 0.0f) {
 		phase_ = Phase::Leave;
 	}
+
 	shotTimer_--;
 	// 指定時間に達した
 	if (shotTimer_ <= 0) {
