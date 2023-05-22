@@ -1,5 +1,14 @@
 ﻿#include "Enemy.h"
 
+Enemy::~Enemy()
+{
+	for (EnemyBullet* bullet : enemyBullets_)
+	{
+		delete bullet;
+	}
+	
+}
+
 void Enemy::Initialize(Model* model, const Vector3& pos) {
 
 	assert(model);
@@ -13,11 +22,27 @@ void Enemy::Initialize(Model* model, const Vector3& pos) {
 
 	velocityEnemy_ = {0, 0, 0.0f};
 
+	ApproachInitialze();
 
+}
+
+void Enemy::ApproachInitialze() 
+{
+	// 発射タイマーを初期化
+	shotTimer_ = kFireInterval;
 }
 
 void Enemy::Update() 
 {
+    // デスフラグの立った弾を削除
+	enemyBullets_.remove_if([](EnemyBullet* bullet) {
+		if (bullet->IsDead()) {
+			delete bullet;
+			return true;
+		}
+		return false;
+	});
+	
 
 	switch (phase_) {
 	case Phase::Approach:
@@ -37,10 +62,21 @@ void Enemy::Update()
 
 	worldTransformEnemy_.UpdateMatrix();
 
+	for (EnemyBullet* bullet : enemyBullets_)
+	{
+		bullet->Update();
+	}
 }
 
-void Enemy::Draw(const ViewProjection& view) {
+void Enemy::Draw(const ViewProjection& view)
+{
+
 	modelEnemy_->Draw(worldTransformEnemy_, view, textureHandleEnemy_);
+
+	// 弾の描画
+	for (EnemyBullet* bullet : enemyBullets_) {
+		bullet->Draw(view);
+	}
 }
 
 
@@ -52,6 +88,14 @@ void Enemy::ApproachUpdate(const float kEnemySpeed) {
 	if (worldTransformEnemy_.translation_.z < 0.0f) {
 		phase_ = Phase::Leave;
 	}
+	shotTimer_--;
+	// 指定時間に達した
+	if (shotTimer_ <= 0) {
+		// 弾を発射した
+		Fire();
+		// 発射タイマーを初期化
+		shotTimer_ = kFireInterval;
+	}
 }
 
 void Enemy::LeaveUpdate(const float kEnemySpeed) 
@@ -59,4 +103,20 @@ void Enemy::LeaveUpdate(const float kEnemySpeed)
 	// 移動(ベクトル加算)
 	worldTransformEnemy_.translation_.x += kEnemySpeed;
 	worldTransformEnemy_.translation_.y += kEnemySpeed;
+}
+
+void Enemy::Fire() 
+{
+	
+		// 弾の速度
+		const float kBulletSpeed = -1.0f;
+		Vector3 velocity(0, 0, kBulletSpeed);
+
+		// 弾を生成し、初期化
+		EnemyBullet* newEnemyBullet = new EnemyBullet();
+		newEnemyBullet->Initialize(modelEnemy_, worldTransformEnemy_.translation_, velocity);
+
+		// 弾を登録する
+		enemyBullets_.push_back(newEnemyBullet);
+	
 }

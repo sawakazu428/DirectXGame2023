@@ -1,13 +1,20 @@
 ﻿#pragma once
 #include "WorldTransform.h"
+#include "MathUtility.h"
 #include "Model.h"
-#include "TextureManager.h"
-#include <cassert>
+#include "EnemyBullet.h"
+#include<list>
 
 class Enemy
 {
 public:
+	// 発射間隔
+	static const int kFireInterval = 60;
+	~Enemy();
+
 	void Initialize(Model* model, const Vector3& pos);
+
+	void ApproachInitialze();
 
 	void Update();
 
@@ -17,6 +24,10 @@ public:
 
 	void LeaveUpdate(const float kEnemySpeed);
 
+	/// <summary>
+	/// 弾発射
+	/// </summary>
+	void Fire();
 private:
     // ワールドトランスフォーム
 	WorldTransform worldTransformEnemy_;
@@ -28,6 +39,9 @@ private:
 	// 速度
 	Vector3 velocityEnemy_;
 
+	// 発射タイマー
+	int32_t shotTimer_ = 0;
+
 // 行動フェーズ
 enum class Phase 
 {
@@ -35,5 +49,8 @@ enum class Phase
 	Leave,    // 離脱する
 };
 	Phase phase_ = Phase::Approach;
+
+// 弾
+std::list<EnemyBullet*> enemyBullets_;
 };
 
