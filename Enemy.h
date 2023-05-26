@@ -5,6 +5,9 @@
 #include "EnemyBullet.h"
 #include<list>
 
+// 自機クラスの前方宣言
+class Player;
+
 class Enemy
 {
 public:
@@ -28,7 +31,13 @@ public:
 	/// 弾発射
 	/// </summary>
 	void Fire();
+
+	void SetPlayer(Player* player) { player_ = player; }
+
+Vector3 GetWorldPosition();
 private:
+	// 自キャラ
+	Player* player_ = nullptr;
     // ワールドトランスフォーム
 	WorldTransform worldTransformEnemy_;
     // 3Dモデル
@@ -52,5 +61,6 @@ enum class Phase
 
 // 弾
 std::list<EnemyBullet*> enemyBullets_;
+
 };
 
