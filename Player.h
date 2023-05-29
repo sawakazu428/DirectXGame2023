@@ -41,8 +41,18 @@ public:
 
 	void Attack();
 
+	// 衝突を検出したら呼び出されるコールバック関数
+	void PlayerOnColision();
+
 	// ワールド座標を取得
-	Vector3 GetWorldPosition();
+	Vector3 GetWorldPlayerPosition();
+
+	// 弾リストを取得
+	const std::list<PlayerBullet*>& GetPlayerBullets() { return playerBullets_; }
+
+	const float GetPlayerRadius() { return playerRadius; }
+	const float playerRadius = 1.0f;
+
 private:
 	
 	
@@ -58,7 +68,7 @@ private:
 
 	// 弾
 	//PlayerBullet* bullet_ = nullptr;
-	std::list<PlayerBullet*> bullets_;
+	std::list<PlayerBullet*> playerBullets_;
 
 
 };

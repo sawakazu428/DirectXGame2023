@@ -31,3 +31,17 @@ void EnemyBullet::Draw(const ViewProjection& viewProjection)
 {
 	modelEnemyBullet_->Draw(worldEnemyBullet_, viewProjection, textureHandleEnemyBullet_);
 }
+
+void EnemyBullet::EnemyBulletOnColision() 
+{
+	isEnemyBulletDead_ = true; 
+}
+
+Vector3 EnemyBullet::GetWorldEnemyBulletPosition() {
+	Vector3 worldPos;
+
+	worldPos.x = worldEnemyBullet_.translation_.x;
+	worldPos.y = worldEnemyBullet_.translation_.y;
+	worldPos.z = worldEnemyBullet_.translation_.z;
+	return worldPos;
+};

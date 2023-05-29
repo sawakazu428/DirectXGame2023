@@ -4,7 +4,7 @@
 
 Player::~Player() 
 {
-	for (PlayerBullet* bullet : bullets_)
+	for (PlayerBullet* bullet : playerBullets_)
 	{
 		delete bullet;
 	}
@@ -26,7 +26,7 @@ void Player::Initialize(Model* model, uint32_t textureHandle) {
 void Player::Update() {
 
 	// デスフラグの立った弾を削除
-	bullets_.remove_if([](PlayerBullet* bullet) 
+	playerBullets_.remove_if([](PlayerBullet* bullet) 
 	{
 		if (bullet->IsDead())
 		{
@@ -80,7 +80,7 @@ void Player::Update() {
 
 	// 弾更新
 	
-	for (PlayerBullet* bullet : bullets_)
+	for (PlayerBullet* bullet : playerBullets_)
 	{
 		bullet->Update();
 	}
@@ -147,7 +147,7 @@ void Player::Draw(ViewProjection& view)
 	model_->Draw(worldTransform_, view, textureHandle_);
 
 	// 弾の描画
-	for (PlayerBullet* bullet : bullets_)
+	for (PlayerBullet* bullet : playerBullets_)
 	{
 		bullet->Draw(view);
 	}
@@ -175,11 +175,13 @@ void Player::Attack()
 		newBullet->Initialize(model_, worldTransform_.translation_,velocity);
 
 		// 弾を登録する
-		bullets_.push_back(newBullet);
+		playerBullets_.push_back(newBullet);
 	}
 }
 
-Vector3 Player::GetWorldPosition() {
+void Player::PlayerOnColision() {}
+
+Vector3 Player::GetWorldPlayerPosition() {
 	Vector3 worldPos;
 
 	worldPos.x = worldTransform_.translation_.x;

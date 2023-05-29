@@ -25,12 +25,22 @@ public:
 	/// <param name="viewProjection">ビュープロジェクション</param>
 	void Draw(const ViewProjection& view);
 
+	// 衝突を検出したら呼び出されるコールバック関数
+	void PlayerBulletOnColision();
+
+	// ワールド座標を取得
+	Vector3 GetWorldPlayerBulletPosition();
+
 	// デスフラグのゲッター
-	bool IsDead() const { return isDead_; }
+	bool IsDead() const { return isPlayerBulletDead_; }
+
+	const float GetPlayerBulletRadius() { return playerBulletRadius; }
+	const float playerBulletRadius = 1.0f;
+
 
 	private:
 	// ワールドトランスフォーム
-	WorldTransform world_;
+	WorldTransform worldPlayerBullet_;
 	// 3Dモデル
 	Model* model_;
 	// テクスチャハンドル
@@ -44,6 +54,6 @@ public:
 	// デスタイマー
 	int32_t deathTimer_ =  kLifeTime;
 	// デスフラグ
-	bool isDead_ = false;
+	bool isPlayerBulletDead_ = false;
 
 };

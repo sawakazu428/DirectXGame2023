@@ -26,8 +26,19 @@ public:
 	/// <param name="viewProjection">ビュープロジェクション</param>
 	void Draw(const ViewProjection& view);
 
+	// 衝突を検出したら呼び出されるコールバック関数
+	void EnemyBulletOnColision();
+
+	// ワールド座標を取得
+	Vector3 GetWorldEnemyBulletPosition();
+
+
 	// デスフラグのゲッター
 	bool IsDead() const { return isEnemyBulletDead_; }
+
+	const float GetEnemyBulletRadius() { return enemyBulletRadius; }
+	const float enemyBulletRadius = 1.0f;
+
 
 private:
 	// ワールドトランスフォーム

@@ -118,14 +118,14 @@ void Enemy::Fire()
 	float length;
 
 	// 自キャラのワールド座標を取得する
-	player_->GetWorldPosition();
+	player_->GetWorldPlayerPosition();
 	// 敵キャラのワールド座標を取得する
-	GetWorldPosition();
+	GetWorldEnemyPosition();
 	// 敵キャラ->自キャラの差分ベクトルを求める
 	Vector3 vector = {
-	    player_->GetWorldPosition().x - GetWorldPosition().x,
-	    player_->GetWorldPosition().y - GetWorldPosition().y,
-	    player_->GetWorldPosition().z - GetWorldPosition().z};
+	    player_->GetWorldPlayerPosition().x - GetWorldEnemyPosition().x,
+	    player_->GetWorldPlayerPosition().y - GetWorldEnemyPosition().y,
+	    player_->GetWorldPlayerPosition().z - GetWorldEnemyPosition().z};
 
 	// ベクトルの正規化
 	length = sqrt(vector.x * vector.x +	vector.y * vector.y + vector.z * vector.z);
@@ -142,7 +142,9 @@ void Enemy::Fire()
 	
 }
 
-Vector3 Enemy::GetWorldPosition() 
+void Enemy::EnemyOnColision() {}
+
+Vector3 Enemy::GetWorldEnemyPosition() 
 {
 	Vector3 worldPos;
 

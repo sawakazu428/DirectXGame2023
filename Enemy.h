@@ -32,9 +32,20 @@ public:
 	/// </summary>
 	void Fire();
 
+	// 衝突を検出したら呼び出されるコールバック関数
+	void EnemyOnColision();
+
 	void SetPlayer(Player* player) { player_ = player; }
 
-Vector3 GetWorldPosition();
+	// ワールド座標を取得
+    Vector3 GetWorldEnemyPosition();
+
+	// 弾リストを取得
+    const std::list<EnemyBullet*>& GetEnemyBullets() { return enemyBullets_; }
+
+	const float GetEnemyRadius() { return enemyRadius; }
+	const float enemyRadius = 1.0f;
+
 private:
 	// 自キャラ
 	Player* player_ = nullptr;
@@ -59,8 +70,11 @@ enum class Phase
 };
 	Phase phase_ = Phase::Approach;
 
-// 弾
-std::list<EnemyBullet*> enemyBullets_;
+    // 弾
+    std::list<EnemyBullet*> enemyBullets_;
+
+
+
 
 };
 
