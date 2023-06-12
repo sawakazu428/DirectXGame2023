@@ -4,6 +4,7 @@ void RailCamera::Initialize(Vector3 trans, Vector3 rot) {
 	// ワールドトランスフォームの初期設定
 	railWorldTransform_.translation_ = trans;
 	railWorldTransform_.rotation_ = rot;
+	railWorldTransform_.Initialize();
 	// ビュープロジェクションの初期化
 	railViewProjection_.Initialize();
 }
@@ -24,11 +25,12 @@ void RailCamera::Update()
 	railWorldTransform_.UpdateMatrix();
 
 	railViewProjection_.matView = Inverse(railWorldTransform_.matWorld_);
+	railViewProjection_.TransferMatrix();
 
 	// カメラの座標を画面表示する処理
-	/*ImGui::Begin("Camera");
+	ImGui::Begin("Camera");
 	ImGui::DragFloat3("railCameraTranslate", &railWorldTransform_.translation_.x, 0.01f);	
 	ImGui::DragFloat3("railCameraRotate", &railWorldTransform_.rotation_.x, 0.01f);
-	ImGui::End();*/
+	ImGui::End();
 
 }

@@ -10,7 +10,6 @@ GameScene::~GameScene()
 	delete enemy_;
 	delete player_;
 	delete model_;
-	delete debugCamera_;
 	delete skydome_;
 	delete modelSkydome_;
 	delete railCamera_;
