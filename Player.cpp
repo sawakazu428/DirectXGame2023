@@ -180,10 +180,10 @@ void Player::Attack()
 
 void Player::PlayerOnColision() {}
 
-//void Player::SetParent(const WorldTransform* parent) 
-//{
-//	worldTransform_.parent_ = parent;
-//}
+void Player::SetParent(const WorldTransform* parent) 
+{
+	worldTransform_.parent_ = parent;
+}
 
 Vector3 Player::GetWorldPlayerPosition() {
 	Vector3 worldPos;

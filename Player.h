@@ -44,7 +44,7 @@ public:
 	// 衝突を検出したら呼び出されるコールバック関数
 	void PlayerOnColision();
 
-	//void SetParent(const WorldTransform* parent);
+	void SetParent(const WorldTransform* parent);
 
 	// ワールド座標を取得
 	Vector3 GetWorldPlayerPosition();

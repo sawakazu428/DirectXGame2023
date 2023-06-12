@@ -53,7 +53,7 @@ void GameScene::Initialize() {
 	// レールカメラの作成
 	railCamera_ = new RailCamera();
 	// レールカメラの初期化
-	railCamera_->Initialize({5, 5, 5}, {0, 0, 1});
+	railCamera_->Initialize({0, 0, 0}, {0, 0, 0});
 
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
 
