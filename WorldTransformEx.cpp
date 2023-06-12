@@ -8,7 +8,6 @@ void WorldTransform::UpdateMatrix() {
 	//{
 	//	matWorld_ *= parent_->matWorld_;
 	// }
-
 	// 行列転送
 	TransferMatrix();
-};
+}
