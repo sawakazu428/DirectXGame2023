@@ -8,8 +8,7 @@
 // 自機クラスの前方宣言
 class Player;
 
-class Enemy
-{
+class Enemy {
 public:
 	// 発射間隔
 	static const int kFireInterval = 60;
@@ -38,10 +37,10 @@ public:
 	void SetPlayer(Player* player) { player_ = player; }
 
 	// ワールド座標を取得
-    Vector3 GetWorldEnemyPosition();
+	Vector3 GetWorldEnemyPosition();
 
 	// 弾リストを取得
-    const std::list<EnemyBullet*>& GetEnemyBullets() { return enemyBullets_; }
+	const std::list<EnemyBullet*>& GetEnemyBullets() { return enemyBullets_; }
 
 	const float GetEnemyRadius() { return enemyRadius; }
 	const float enemyRadius = 1.0f;
@@ -49,12 +48,12 @@ public:
 private:
 	// 自キャラ
 	Player* player_ = nullptr;
-    // ワールドトランスフォーム
+	// ワールドトランスフォーム
 	WorldTransform worldTransformEnemy_;
-    // 3Dモデル
-    Model* modelEnemy_;
-    // テクスチャハンドル
-    uint32_t textureHandleEnemy_;
+	// 3Dモデル
+	Model* modelEnemy_;
+	// テクスチャハンドル
+	uint32_t textureHandleEnemy_;
 
 	// 速度
 	Vector3 velocityEnemy_;
@@ -62,19 +61,13 @@ private:
 	// 発射タイマー
 	int32_t shotTimer_ = 0;
 
-// 行動フェーズ
-enum class Phase 
-{
-	Approach, // 接近する
-	Leave,    // 離脱する
-};
+	// 行動フェーズ
+	enum class Phase {
+		Approach, // 接近する
+		Leave,    // 離脱する
+	};
 	Phase phase_ = Phase::Approach;
 
-    // 弾
-    std::list<EnemyBullet*> enemyBullets_;
-
-
-
-
+	// 弾
+	std::list<EnemyBullet*> enemyBullets_;
 };
-
