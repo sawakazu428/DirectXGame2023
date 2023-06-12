@@ -1,4 +1,5 @@
 #pragma once
+#include"cassert"
 
 /// <summary>
 /// 3次元ベクトル

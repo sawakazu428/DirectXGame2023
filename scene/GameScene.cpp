@@ -1,7 +1,6 @@
 ﻿#include "GameScene.h"
 #include "TextureManager.h"
 #include "AxisIndicator.h"
-#include <cassert>
 
 GameScene::GameScene() {}
 
@@ -14,6 +13,7 @@ GameScene::~GameScene()
 	delete debugCamera_;
 	delete skydome_;
 	delete modelSkydome_;
+	delete railCamera_;
 }
 
 
@@ -50,6 +50,11 @@ void GameScene::Initialize() {
 	// 天球の初期化
 	skydome_->Initialize(modelSkydome_);
 
+	// レールカメラの作成
+	railCamera_ = new RailCamera();
+	// レールカメラの初期化
+	railCamera_->Initialize({5, 5, 5}, {0, 0, 0});
+
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
 
 	// 軸方向表示の表示を有効にする
@@ -67,7 +72,8 @@ void GameScene::Update() {
 
 	skydome_->Update();
 
-	CheckAllColisions();
+	railCamera_->Update();
+
 	// ポインタがnullでない(有効である)時だけ行う
 	if (enemy_) // if(Enemy_ != nullptr)と同じ効果になる
 	{
@@ -86,9 +92,14 @@ void GameScene::Update() {
 		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
 		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
 		viewProjection_.TransferMatrix();
-	} else {
-		viewProjection_.UpdateMatrix();
+	} else if(!isDebugCameraActive_){
+		viewProjection_.matView = railCamera_->GetViewProjection().matView;
+		viewProjection_.matProjection = railCamera_->GetViewProjection().matProjection;
+		viewProjection_.TransferMatrix();
+
 	}
+	CheckAllColisions();
+
 }
 
 void GameScene::Draw() {

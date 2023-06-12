@@ -3,7 +3,6 @@
 #include "Vector3.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-#include "cassert"
 
 class EnemyBullet 
 {

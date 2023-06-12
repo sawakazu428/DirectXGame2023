@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include "Model.h"
 #include "WorldTransform.h"
-#include "cassert"
 
 class Skydome 
 {
