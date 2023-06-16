@@ -30,11 +30,11 @@ void GameScene::Initialize() {
 	worldTransform_.Initialize();
 	// ビュープロジェクションの初期化
 	viewProjection_.Initialize();
+	Vector3 playerPosition(0.0f, 0.0f, 5.0f);
 	// 自キャラの作成
 	player_ = new Player();
 	// 自キャラの初期化
-	player_->Initialize(model_, textureHandle_, {0,0,2});
-	player_->SetParent(&railCamera_->GetWorldTransform());
+	player_->Initialize(model_, textureHandle_, playerPosition);
 
 	//敵の作成
 	enemy_ = new Enemy();
@@ -54,6 +54,7 @@ void GameScene::Initialize() {
 	railCamera_ = new RailCamera();
 	// レールカメラの初期化
 	railCamera_->Initialize({0, 0, 0}, {0, 0, 0});
+	player_->SetParent(&railCamera_->GetWorldTransform());
 
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
 
