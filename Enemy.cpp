@@ -86,6 +86,10 @@ void Enemy::ApproachUpdate(const float kEnemySpeed) {
 
 void Enemy::LeaveUpdate(const float kEnemySpeed) 
 {
+	if (deathTimer_-- <= 0)
+	{
+		isEnemyDead_ = true;
+	}
 	// 移動(ベクトル加算)
 	worldTransformEnemy_.translation_.x += kEnemySpeed;
 	worldTransformEnemy_.translation_.y += kEnemySpeed;

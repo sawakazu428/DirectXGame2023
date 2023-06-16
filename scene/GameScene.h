@@ -14,6 +14,8 @@
 #include "Skydome.h"
 #include "RailCamera.h"
 
+#include <list>
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -56,7 +58,7 @@ public: // メンバ関数
 	/// <param name="enemyBullet"></param>
 	void AddEnemyBullet(EnemyBullet* enemyBullet);
 
-
+	void AddEnemy(Vector3 pos);
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
@@ -73,12 +75,13 @@ private: // メンバ変数
 	// ビュープロジェクション
 	ViewProjection viewProjection_;
 
-	Enemy* enemy_ = nullptr;
 	Player* player_ = nullptr;
 	Skydome* skydome_ = nullptr;
 	RailCamera* railCamera_ = nullptr;
 	
 		// 弾
+
+	std::list<Enemy*> enemy_;
 	std::list<EnemyBullet*> enemyBullets_;
 
 

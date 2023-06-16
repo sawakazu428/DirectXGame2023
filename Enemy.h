@@ -44,6 +44,7 @@ public:
 	// ワールド座標を取得
 	Vector3 GetWorldEnemyPosition();
 
+	bool GetIsDead() { return isEnemyDead_; }
 	// 弾リストを取得
 	//const std::list<EnemyBullet*>& GetEnemyBullets() { return enemyBullets_; }
 
@@ -74,4 +75,11 @@ private:
 	};
 	Phase phase_ = Phase::Approach;
 
+	// 寿命<frm>
+	static const int32_t kLifeTime = 60 * 5;
+
+	// デスタイマー
+	int32_t deathTimer_ = kLifeTime;
+	// デスフラグ
+	bool isEnemyDead_ = false;
 };
