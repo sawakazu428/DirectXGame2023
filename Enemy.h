@@ -5,8 +5,11 @@
 #include "EnemyBullet.h"
 #include<list>
 
+
 // 自機クラスの前方宣言
 class Player;
+// GameSceneの前方宣言(苦肉の策)
+class GameScene;
 
 class Enemy {
 public:
@@ -36,11 +39,13 @@ public:
 
 	void SetPlayer(Player* player) { player_ = player; }
 
+	void SetGameScene(GameScene* gameScene) { gameScene_ = gameScene; }
+
 	// ワールド座標を取得
 	Vector3 GetWorldEnemyPosition();
 
 	// 弾リストを取得
-	const std::list<EnemyBullet*>& GetEnemyBullets() { return enemyBullets_; }
+	//const std::list<EnemyBullet*>& GetEnemyBullets() { return enemyBullets_; }
 
 	const float GetEnemyRadius() { return enemyRadius; }
 	const float enemyRadius = 1.0f;
@@ -48,13 +53,14 @@ public:
 private:
 	// 自キャラ
 	Player* player_ = nullptr;
+	// ゲームシーン
+	GameScene* gameScene_ = nullptr;
 	// ワールドトランスフォーム
 	WorldTransform worldTransformEnemy_;
 	// 3Dモデル
 	Model* modelEnemy_;
 	// テクスチャハンドル
 	uint32_t textureHandleEnemy_;
-
 	// 速度
 	Vector3 velocityEnemy_;
 
@@ -68,6 +74,4 @@ private:
 	};
 	Phase phase_ = Phase::Approach;
 
-	// 弾
-	std::list<EnemyBullet*> enemyBullets_;
 };

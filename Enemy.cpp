@@ -1,13 +1,10 @@
 ﻿#include "Enemy.h"
 #include "Player.h"
 #include <cmath>
+#include "GameScene.h"
 
 Enemy::~Enemy()
 {
-	for (EnemyBullet* bullet : enemyBullets_)
-	{
-		delete bullet;
-	}
 	
 }
 
@@ -36,14 +33,7 @@ void Enemy::ApproachInitialze()
 
 void Enemy::Update() 
 {
-    // デスフラグの立った弾を削除
-	enemyBullets_.remove_if([](EnemyBullet* bullet) {
-		if (bullet->IsDead()) {
-			delete bullet;
-			return true;
-		}
-		return false;
-	});
+  
 	
 
 	switch (phase_) {
@@ -64,10 +54,6 @@ void Enemy::Update()
 
 	worldTransformEnemy_.UpdateMatrix();
 
-	for (EnemyBullet* bullet : enemyBullets_)
-	{
-		bullet->Update();
-	}
 }
 
 void Enemy::Draw(const ViewProjection& view)
@@ -75,10 +61,7 @@ void Enemy::Draw(const ViewProjection& view)
 
 	modelEnemy_->Draw(worldTransformEnemy_, view, textureHandleEnemy_);
 
-	// 弾の描画
-	for (EnemyBullet* bullet : enemyBullets_) {
-		bullet->Draw(view);
-	}
+	
 }
 
 
@@ -137,9 +120,7 @@ void Enemy::Fire()
 	EnemyBullet* newEnemyBullet = new EnemyBullet();
 	newEnemyBullet->Initialize(modelEnemy_, worldTransformEnemy_.translation_, velocity);
 
-	// 弾を登録する
-	enemyBullets_.push_back(newEnemyBullet);
-	
+	gameScene_->AddEnemyBullet(newEnemyBullet);
 }
 
 void Enemy::EnemyOnColision() {}
