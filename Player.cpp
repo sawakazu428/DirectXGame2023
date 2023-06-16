@@ -9,7 +9,7 @@ Player::~Player()
 	}
 }
 
-void Player::Initialize(Model* model, uint32_t textureHandle) {
+void Player::Initialize(Model* model, uint32_t textureHandle, Vector3 pos) {
 	// NULLポイントチェック
 	assert(model);
 

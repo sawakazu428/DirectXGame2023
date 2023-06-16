@@ -33,7 +33,7 @@ void GameScene::Initialize() {
 	// 自キャラの作成
 	player_ = new Player();
 	// 自キャラの初期化
-	player_->Initialize(model_, textureHandle_);
+	player_->Initialize(model_, textureHandle_, {0,0,2});
 	player_->SetParent(&railCamera_->GetWorldTransform());
 
 	//敵の作成
