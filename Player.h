@@ -5,6 +5,7 @@
 #include "PlayerBullet.h"
 #include<list>
 #include "MathUtility.h"
+#include "Matrix4x4.h"
 
 /// <summary>
 /// 自キャラ
@@ -60,6 +61,9 @@ private:
 	
 	// ワールド変換データ
 	WorldTransform worldTransform_;
+
+	// 3Dレティクル用ワールドトランスフォーム
+	WorldTransform worldTransform3Dreticle_;
 	// モデル
 	Model* model_ = nullptr;
 

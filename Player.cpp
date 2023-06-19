@@ -21,6 +21,7 @@ void Player::Initialize(Model* model, uint32_t textureHandle, Vector3 pos) {
 	worldTransform_.Initialize();
 	// シングルインスタンスを取得する
 	input_ = Input::GetInstance();
+	worldTransform3Dreticle_.Initialize();
 }
 
 void Player::Update() {
@@ -107,7 +108,18 @@ void Player::Update() {
 
 	worldTransform_.UpdateMatrix();
 
+	// 自機のワールド座標から3Dレティクルのワールド座標を計算
+	{
+	    // 自機から3Dレティクルへの距離
+		const float kDistancePlayerTo3DReticle = 50.0f;
+	    // 自機から3Dレティクルのオフセット(Z+向き)
+		Vector3 offset = {0.0f, 0.0f, 1.0f};
+		// 自機のワールド行列の回転を反映
+		offset = TransformNormal(offset, worldTransform_.matWorld_);
+		// ベクトルの長さを整える
+		offset = Normalize(offset) * kDistancePlayerTo3DReticle;
 
+	}
 
 
 

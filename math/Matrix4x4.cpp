@@ -114,6 +114,7 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vecto
 	return result;
 };
 
+// 逆行列
 Matrix4x4 Inverse(const Matrix4x4& m) {
 	Matrix4x4 result;
 	float determinant = m.m[0][0] * m.m[1][1] * m.m[2][2] * m.m[3][3] +
@@ -211,3 +212,21 @@ Matrix4x4 Inverse(const Matrix4x4& m) {
 	                 determinantRecp;
 	return result;
 };
+
+
+// 内積
+float Dot(const Vector3& v1, const Vector3& v2) {
+	return {v1.x * v2.x + v1.y * v2.y + v1.z * v2.z};
+};
+
+// 長さ(ノルム)
+float Length(const Vector3& v) { return sqrtf(Dot(v, v)); };
+
+// 正規化
+Vector3 Normalize(const Vector3& v) {
+	float length = Length(v);
+	assert(length != 0.0f);
+	return {v.x / length, v.y / length, v.z / length};
+};
+
+
