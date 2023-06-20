@@ -71,6 +71,77 @@ Matrix4x4 MakeTranslateMatrix(Vector3 translate) {
 	};
 	return result;
 }
+float Dot(const Vector3& v1, const Vector3& v2) {
+	return {v1.x * v2.x + v1.y * v2.y + v1.z * v2.z};
+};
+
+// 長さ(ノルム)
+float Length(const Vector3& v) { return sqrtf(Dot(v, v)); };
+
+// 正規化
+Vector3 Normalize(const Vector3& v) {
+	float length = Length(v);
+	assert(length != 0.0f);
+	return {v.x / length, v.y / length, v.z / length};
+}
+
+Vector3& operator+=(Vector3& v1, const Vector3& v2)
+{ 
+	v1.x += v2.x;
+	v1.y += v2.y;
+	v1.z += v2.z;
+
+	return v1;
+}
+const Vector3 operator+(const Vector3& v1, const Vector3& v2) 
+{
+	Vector3 temp(v1);
+	return temp += v2;
+}
+
+Vector3& operator-=(Vector3& v1, const Vector3& v2) 
+{
+	v1.x -= v2.x;
+	v1.y -= v2.y;
+	v1.z -= v2.z;
+
+	return v1;
+}
+const Vector3 operator-(const Vector3& v1, const Vector3& v2) 
+{
+	Vector3 temp(v1);
+	return temp -= v2;
+}
+
+Vector3& operator*=(Vector3& v, float s) 
+{
+	v.x *= s;
+	v.y *= s;
+	v.z *= s;
+
+	return v;
+}
+const Vector3 operator*(const Vector3& v, float s) 
+{
+	Vector3 temp(v);
+	return temp *= s;
+}
+
+Vector3& operator/=(Vector3& v, float s) 
+{
+	v.x /= s;
+	v.y /= s;
+	v.z /= s;
+
+	return v;
+}
+
+const Vector3 operator/(const Vector3& v, float s) 
+{
+	Vector3 temp(v);
+	return temp /= s;
+}
+
 
 Matrix4x4& operator*=(Matrix4x4& m1, const Matrix4x4& m2) {
 	Matrix4x4 result = {};
@@ -215,18 +286,5 @@ Matrix4x4 Inverse(const Matrix4x4& m) {
 
 
 // 内積
-float Dot(const Vector3& v1, const Vector3& v2) {
-	return {v1.x * v2.x + v1.y * v2.y + v1.z * v2.z};
-};
-
-// 長さ(ノルム)
-float Length(const Vector3& v) { return sqrtf(Dot(v, v)); };
-
-// 正規化
-Vector3 Normalize(const Vector3& v) {
-	float length = Length(v);
-	assert(length != 0.0f);
-	return {v.x / length, v.y / length, v.z / length};
-};
 
 

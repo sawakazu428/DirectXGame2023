@@ -66,6 +66,8 @@ private:
 	WorldTransform worldTransform3Dreticle_;
 	// モデル
 	Model* model_ = nullptr;
+	Model* ReticleModel_ = nullptr;
+
 
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;

@@ -38,7 +38,7 @@ void GameScene::Initialize() {
 	viewProjection_.Initialize();
 	// 自キャラの作成
 	player_ = new Player();
-	Vector3 playerPosition(0.0f, 0.0f, 5.0f);
+	Vector3 playerPosition(0.0f, -3.0f, 5.0f);
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_, playerPosition);
 

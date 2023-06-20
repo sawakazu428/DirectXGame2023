@@ -15,6 +15,7 @@ void Player::Initialize(Model* model, uint32_t textureHandle, Vector3 pos) {
 
 	// 受け渡し
 	model_ = model;
+	ReticleModel_ = Model::CreateFromOBJ("Reticle", true);
 	textureHandle_ = textureHandle;
 	worldTransform_.translation_ = pos;
 	// ワールド変換の初期化
@@ -118,7 +119,9 @@ void Player::Update() {
 		offset = TransformNormal(offset, worldTransform_.matWorld_);
 		// ベクトルの長さを整える
 		offset = Normalize(offset) * kDistancePlayerTo3DReticle;
-
+		// 3Dレティクルの座標を設定
+		worldTransform3Dreticle_.translation_ = GetWorldPlayerPosition() + offset;
+		worldTransform3Dreticle_.UpdateMatrix();
 	}
 
 
@@ -157,7 +160,7 @@ void Player::Update() {
 void Player::Draw(ViewProjection& view) 
 {
 	model_->Draw(worldTransform_, view, textureHandle_);
-
+	ReticleModel_->Draw(worldTransform3Dreticle_, view);
 	// 弾の描画
 	for (PlayerBullet* bullet : playerBullets_)
 	{
@@ -188,6 +191,9 @@ void Player::Attack()
 
 		// 弾を登録する
 		playerBullets_.push_back(newBullet);
+		// 自機から照準オブジェクトへのベクトル
+		velocity = worldTransform3Dreticle_.translation_ - GetWorldPlayerPosition();
+		velocity = Normalize(velocity) * kBulletSpeed;
 	}
 }
 
