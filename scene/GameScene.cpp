@@ -43,7 +43,7 @@ void GameScene::Initialize() {
 	player_->Initialize(model_, textureHandle_, playerPosition);
 
 	AddEnemy({0.0f, 5.0f, 30.0f});
-
+	
 	LoadEnemyPopData();
 
 	// 3Dモデルの作成
@@ -59,6 +59,7 @@ void GameScene::Initialize() {
 	railCamera_->Initialize({0, 0, 0}, {0, 0, 0});
 	player_->SetParent(&railCamera_->GetWorldTransform());
 
+	TextureManager::Load("target.png");
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
 
 	// 軸方向表示の表示を有効にする
@@ -70,13 +71,13 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 
-	player_->Update();
+	player_->Update(viewProjection_);
 
 	debugCamera_->Update();
 
 	skydome_->Update();
 
-	railCamera_->Update();
+	railCamera_->Update();	
 
 	
 	  // デスフラグの立った弾を削除
@@ -179,6 +180,8 @@ void GameScene::Draw() {
 	// 前景スプライト描画前処理
 	Sprite::PreDraw(commandList);
 
+
+	player_->DrawUI();
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>

@@ -1,5 +1,5 @@
 ﻿#include "Player.h"
-
+#include "DirectXCommon.h"
 
 Player::~Player() 
 {
@@ -7,6 +7,7 @@ Player::~Player()
 	{
 		delete bullet;
 	}
+	delete sprite2DReticle_;
 }
 
 void Player::Initialize(Model* model, uint32_t textureHandle, Vector3 pos) {
@@ -23,9 +24,15 @@ void Player::Initialize(Model* model, uint32_t textureHandle, Vector3 pos) {
 	// シングルインスタンスを取得する
 	input_ = Input::GetInstance();
 	worldTransform3Dreticle_.Initialize();
+
+	// レティクル用テクスチャ取得
+	uint32_t textureReticle = TextureManager::Load("target.png");
+
+	// スプライト生成
+	sprite2DReticle_ = Sprite::Create(textureReticle, {640, 360}, {1,1,1,1}, {0.5f, 0.5f});
 }
 
-void Player::Update() {
+void Player::Update(ViewProjection& view) {
 
 	// デスフラグの立った弾を削除
 	playerBullets_.remove_if([](PlayerBullet* bullet) 
@@ -124,7 +131,24 @@ void Player::Update() {
 		worldTransform3Dreticle_.UpdateMatrix();
 	}
 
+	// 3Dレティクルのワールド座標から2Dレティクルのスクリーン座標を計算
+	{
+		Vector3 positionReticle = worldTransform3Dreticle_.translation_;
 
+		// ビューポート行列 
+		Matrix4x4 matViewport =
+		    MakeViewportMatrix(0, 0, WinApp::kWindowWidth, WinApp::kWindowHeight, 0, 1);
+
+		// ビュー行列とプロジェクション行列、ビューポート行列を合成する
+		Matrix4x4 matViewProjectionViewport =
+		   view.matView * view.matProjection * matViewport;
+
+		// ワールド->スクリーン座標変換(ここで3Dから2Dになる)
+		positionReticle = Transform(positionReticle, matViewProjectionViewport);
+
+		// スプライトのレティクルに座標返還
+		sprite2DReticle_->SetPosition(Vector2(positionReticle.x, positionReticle.y));
+	}
 
 
 	#ifdef DEBUG
@@ -172,6 +196,11 @@ void Player::Draw(ViewProjection& view)
 	//{
 	//	bullet_->Draw(view);
 	//}
+}
+
+void Player::DrawUI()
+{
+	sprite2DReticle_->Draw();
 }
 
 void Player::Attack()	

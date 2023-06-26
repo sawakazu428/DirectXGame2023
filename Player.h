@@ -6,6 +6,10 @@
 #include<list>
 #include "MathUtility.h"
 #include "Matrix4x4.h"
+#include "Sprite.h"
+
+
+
 
 /// <summary>
 /// 自キャラ
@@ -28,7 +32,7 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update();
+	void Update(ViewProjection& view);
 
 	/// <summary>
 	/// 描画
@@ -39,6 +43,8 @@ public:
 	/// </summary>
 	/// <param name="ViewProjection">ビュープロジェクション(参照渡し)</param>
 	void Draw(ViewProjection& view);
+
+	void DrawUI();
 
 	void Attack();
 
@@ -64,6 +70,8 @@ private:
 
 	// 3Dレティクル用ワールドトランスフォーム
 	WorldTransform worldTransform3Dreticle_;
+
+	ViewProjection viewProjection_;
 	// モデル
 	Model* model_ = nullptr;
 	Model* ReticleModel_ = nullptr;
@@ -78,5 +86,6 @@ private:
 	//PlayerBullet* bullet_ = nullptr;
 	std::list<PlayerBullet*> playerBullets_;
 
+	Sprite* sprite2DReticle_ = nullptr;
 
 };
