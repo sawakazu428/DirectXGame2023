@@ -59,6 +59,7 @@ void GameScene::Initialize() {
 	railCamera_->Initialize({0, 0, 0}, {0, 0, 0});
 	player_->SetParent(&railCamera_->GetWorldTransform());
 
+	// レティクルのテクスチャ
 	TextureManager::Load("target.png");
 
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);

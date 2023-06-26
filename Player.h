@@ -44,6 +44,10 @@ public:
 	/// <param name="ViewProjection">ビュープロジェクション(参照渡し)</param>
 	void Draw(ViewProjection& view);
 
+
+	/// <summary>
+	/// UI描画
+	/// </summary>
 	void DrawUI();
 
 	void Attack();
@@ -86,6 +90,7 @@ private:
 	//PlayerBullet* bullet_ = nullptr;
 	std::list<PlayerBullet*> playerBullets_;
 
+	// 2Dレティクル用スプライト
 	Sprite* sprite2DReticle_ = nullptr;
 
 };
