@@ -9,6 +9,7 @@ void Skydome::Initialize(Model* model)
 
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = {0, 0, 0};
+	worldTransform_.scale_ = {10, 10, 10};
 }
 
 void Skydome::Update()

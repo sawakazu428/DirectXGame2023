@@ -84,8 +84,6 @@ void Player::Update(ViewProjection& view) {
 	}
 
 	
-	// キャラクター攻撃処理
-	Attack();
 
 	// 弾更新
 	
@@ -150,6 +148,46 @@ void Player::Update(ViewProjection& view) {
 		sprite2DReticle_->SetPosition(Vector2(positionReticle.x, positionReticle.y));
 	}
 
+	{
+		POINT mousePosition;
+		// マウス座標(スクリーン座標)を取得する
+		GetCursorPos(&mousePosition);
+
+		// クライアントエリア座標に変換する
+		HWND hwnd = WinApp::GetInstance()->GetHwnd();
+		ScreenToClient(hwnd, &mousePosition);
+
+		// マウス座標を2Dレティクルのスプライトに代入する
+		sprite2DReticle_->SetPosition(Vector2(float(mousePosition.x), float(mousePosition.y)));
+		// ビューポート行列
+		Matrix4x4 matViewport =
+		    MakeViewportMatrix(0, 0, WinApp::kWindowWidth, WinApp::kWindowHeight, 0, 1);
+
+		// ビュー行列とプロジェクション行列、ビューポート行列を合成する
+		Matrix4x4 matVPV = view.matView * view.matProjection * matViewport;
+
+		// 合成行列の逆行列を計算する
+		Matrix4x4 matInverseVPV = Inverse(matVPV);
+
+		// スクリーン座標
+		Vector3 posNear = Vector3(float(mousePosition.x), float(mousePosition.y), 0); ///
+		Vector3 posFar = Vector3(float(mousePosition.x), float(mousePosition.y), 1);  ///
+
+		// スクリーン座標からワールド座標系へ
+		posNear = Transform(posNear, matInverseVPV);
+		posFar = Transform(posFar, matInverseVPV);
+
+		// マウスレイの方向
+		Vector3 mouseDirection = posFar - posNear; ///
+		mouseDirection = Normalize(mouseDirection);
+		// カメラから照準オブジェクトの距離
+		const float kDistanceTestObject = 200.0f; ///
+		worldTransform3Dreticle_.translation_ = posNear + mouseDirection * kDistanceTestObject; ///
+		worldTransform3Dreticle_.UpdateMatrix();
+
+	}
+	// キャラクター攻撃処理
+	Attack();
 
 	#ifdef DEBUG
 	// キャラクターの座標を画面表示する処理
@@ -196,6 +234,8 @@ void Player::Draw(ViewProjection& view)
 	//{
 	//	bullet_->Draw(view);
 	//}
+
+
 }
 
 void Player::DrawUI()
@@ -214,15 +254,17 @@ void Player::Attack()
 		// 速度ベクトルを自機の向きに合わせて回転させる
 		velocity = TransformNormal(velocity, worldTransform_.matWorld_);
 
+
+		// 自機から照準オブジェクトへのベクトル
+		velocity = worldTransform3Dreticle_.translation_ - worldTransform_.translation_;
+		velocity = Normalize(velocity) * kBulletSpeed;
+
 		// 弾を生成し、初期化
 		PlayerBullet* newBullet = new PlayerBullet();
 		newBullet->Initialize(model_, GetWorldPlayerPosition(), velocity);
 
 		// 弾を登録する
 		playerBullets_.push_back(newBullet);
-		// 自機から照準オブジェクトへのベクトル
-		velocity = worldTransform3Dreticle_.translation_ - GetWorldPlayerPosition();
-		velocity = Normalize(velocity) * kBulletSpeed;
 	}
 }
 
