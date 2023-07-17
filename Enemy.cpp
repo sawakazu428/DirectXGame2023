@@ -72,6 +72,19 @@ void Enemy::Update()
 		bullet->Update();
 	}
 
+	 // 終了したタイマーを削除
+	timedCalls_.remove_if([](TimedCall* timedCall) {
+		if (timedCall->IsFinished()) {
+			delete timedCall;
+			return true;
+		}
+		return false;
+	});
+
+	// 範囲forでリストの全要素について回す
+	for (TimedCall* timedCall : timedCalls_) {
+		timedCall->Update();
+	}
 	
 
 }
@@ -97,24 +110,13 @@ void Enemy::ApproachUpdate(const float kEnemySpeed) {
 		phase_ = Phase::Leave;
 	}
 
-	 // 終了したタイマーを削除
-	timedCalls_.remove_if([](TimedCall* timedCall) {
-		if (timedCall->IsFinished()) {
-			delete timedCall;
-			return true;
-		}
-		return false;
-	});
-
-	// 範囲forでリストの全要素について回す
-	for (TimedCall* timedCall : timedCalls_) {
-		timedCall->Update();
-	}
+	
 
 }
 
 void Enemy::LeaveUpdate(const float kEnemySpeed) 
 {
+	timedCalls_.clear();
 	// 移動(ベクトル加算)
 	worldTransformEnemy_.translation_.x += kEnemySpeed;
 	worldTransformEnemy_.translation_.y += kEnemySpeed;
