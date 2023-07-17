@@ -129,6 +129,16 @@ void Enemy::FireReset()
 
 	// 発射タイマーをセットする
 	timedCalls_.push_back(new TimedCall(std::bind(&Enemy::FireReset, this), 60));
+
+	// ???
+
+
+	// 範囲forでリストの全要素について回す
+	for (TimedCall* timedCall : timedCalls_)
+	{
+		timedCall->Update();
+	}
+
 }
 
 
