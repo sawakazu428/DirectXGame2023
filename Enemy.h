@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "EnemyBullet.h"
 #include<list>
+#include "TimedCall.h"
 
 class Enemy
 {
@@ -28,6 +29,13 @@ public:
 	/// 弾発射
 	/// </summary>
 	void Fire();
+
+	/// <summary>
+	/// 弾を発射し、タイマーをリセットするコールバック関数
+	/// </summary>
+	void FireReset();
+
+
 private:
     // ワールドトランスフォーム
 	WorldTransform worldTransformEnemy_;
@@ -52,5 +60,7 @@ enum class Phase
 
 // 弾
 std::list<EnemyBullet*> enemyBullets_;
+// 時限発動のリスト
+std::list<TimedCall*> timedCalls_;
 };
 

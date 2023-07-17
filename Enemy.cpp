@@ -121,3 +121,14 @@ void Enemy::Fire()
 		enemyBullets_.push_back(newEnemyBullet);
 	
 }
+
+void Enemy::FireReset() 
+{
+	// 弾を発射する
+	Fire(); 
+
+	// 発射タイマーをセットする
+	timedCalls_.push_back(new TimedCall(std::bind(&Enemy::FireReset, this), 60));
+}
+
+
