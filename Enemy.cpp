@@ -131,7 +131,10 @@ void Enemy::FireReset()
 	timedCalls_.push_back(new TimedCall(std::bind(&Enemy::FireReset, this), 60));
 
 	// ???
-
+	for (TimedCall* timedCall : timedCalls_) 
+	{
+		delete timedCall;
+	}
 
 	// 範囲forでリストの全要素について回す
 	for (TimedCall* timedCall : timedCalls_)
