@@ -7,6 +7,10 @@ Enemy::~Enemy()
 		delete bullet;
 	}
 	
+	for (TimedCall* timedCall : timedCalls_)
+	{
+		delete timedCall;
+	}
 }
 
 void Enemy::Initialize(Model* model, const Vector3& pos) {
@@ -28,8 +32,9 @@ void Enemy::Initialize(Model* model, const Vector3& pos) {
 
 void Enemy::ApproachInitialze() 
 {
-	// 発射タイマーを初期化
-	shotTimer_ = kFireInterval;
+	
+	// 発射タイマーをセットする
+	FireReset();
 }
 
 void Enemy::Update() 
@@ -66,6 +71,24 @@ void Enemy::Update()
 	{
 		bullet->Update();
 	}
+
+	 // 終了したタイマーを削除
+	timedCalls_.remove_if([](TimedCall* timedCall)
+	{
+		if (timedCall->IsFinished()) 
+		{
+			delete timedCall;
+			return true;
+		}
+		return false;
+	});
+
+	// 範囲forでリストの全要素について回す
+	for (TimedCall* timedCall : timedCalls_) 
+	{
+		timedCall->Update();
+	}
+
 }
 
 void Enemy::Draw(const ViewProjection& view)
@@ -89,14 +112,6 @@ void Enemy::ApproachUpdate(const float kEnemySpeed) {
 		phase_ = Phase::Leave;
 	}
 
-	shotTimer_--;
-	// 指定時間に達した
-	if (shotTimer_ <= 0) {
-		// 弾を発射した
-		Fire();
-		// 発射タイマーを初期化
-		shotTimer_ = kFireInterval;
-	}
 }
 
 void Enemy::LeaveUpdate(const float kEnemySpeed) 
@@ -127,20 +142,11 @@ void Enemy::FireReset()
 	// 弾を発射する
 	Fire(); 
 
+	// 発射タイマーを初期化
+	shotTimer_ = kFireInterval;
+
 	// 発射タイマーをセットする
-	timedCalls_.push_back(new TimedCall(std::bind(&Enemy::FireReset, this), 60));
-
-	// ???
-	for (TimedCall* timedCall : timedCalls_) 
-	{
-		delete timedCall;
-	}
-
-	// 範囲forでリストの全要素について回す
-	for (TimedCall* timedCall : timedCalls_)
-	{
-		timedCall->Update();
-	}
+	timedCalls_.push_back(new TimedCall(std::bind(&Enemy::FireReset, this), kFireInterval));
 
 }
 

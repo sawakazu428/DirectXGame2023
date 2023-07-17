@@ -2,7 +2,7 @@
 
 TimedCall::TimedCall(std::function<void(void)> f, uint32_t time)
 { 
-	std::function<void(void)> f = f;
+	std::function<void(void)> fire = f;
 	time_ = time;
 }
 
@@ -13,6 +13,7 @@ void TimedCall::Update()
 		return;
 	}
 	time_--;
+
 	if (time_ <= 0)
 	{
 		isComp = true;
