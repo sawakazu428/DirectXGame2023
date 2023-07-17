@@ -13,6 +13,12 @@ Enemy::~Enemy()
 	}
 }
 
+void Enemy::ApproachInitialze() 
+{	
+	// 発射タイマーをセットする
+	FireReset();
+}
+
 void Enemy::Initialize(Model* model, const Vector3& pos) {
 
 	assert(model);
@@ -30,12 +36,6 @@ void Enemy::Initialize(Model* model, const Vector3& pos) {
 
 }
 
-void Enemy::ApproachInitialze() 
-{
-	
-	// 発射タイマーをセットする
-	FireReset();
-}
 
 void Enemy::Update() 
 {
@@ -142,11 +142,9 @@ void Enemy::FireReset()
 	// 弾を発射する
 	Fire(); 
 
-	// 発射タイマーを初期化
-	shotTimer_ = kFireInterval;
-
 	// 発射タイマーをセットする
-	timedCalls_.push_back(new TimedCall(std::bind(&Enemy::FireReset, this), kFireInterval));
+	timedCalls_.push_back(
+		new TimedCall(std::bind(&Enemy::FireReset, this), 60));
 
 }
 
