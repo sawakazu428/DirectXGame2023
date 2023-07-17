@@ -109,9 +109,6 @@ void Enemy::ApproachUpdate(const float kEnemySpeed) {
 	if (worldTransformEnemy_.translation_.z < 0.0f) {
 		phase_ = Phase::Leave;
 	}
-
-	
-
 }
 
 void Enemy::LeaveUpdate(const float kEnemySpeed) 
