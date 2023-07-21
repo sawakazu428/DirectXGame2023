@@ -133,7 +133,7 @@ void GameScene::Draw() {
 void GameScene::CheckAllColisions() 
 { 
 	// 判定対象AとBの座標
-	Vector3 posA, posB;
+	//Vector3 posA, posB;
 
 	// 自弾リストの取得
 	const std::list<PlayerBullet*>& playerBullets = player_->GetPlayerBullets();
@@ -229,9 +229,11 @@ void GameScene::CheckAllColisions()
 	//		}
 	//	}
 	//}	
-	for (PlayerBullet* pBullets : playerBullets) {
-		for (EnemyBullet* eBullets : enemyBullets) {
-			CheckCollisionpair(pBullets, eBullets);
+	for (PlayerBullet* pBullets : playerBullets) 
+	{
+		for (EnemyBullet* eBullets : enemyBullets)
+		{
+			CheckCollisionpair(eBullets, pBullets);
 		}
 		
 	}

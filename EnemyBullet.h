@@ -4,6 +4,7 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "cassert"
+#include "Collider.h"
 
 class EnemyBullet : public Collider {
 public:
@@ -40,8 +41,9 @@ public:
 
 		// 衝突時に呼ばれる関数
 	void OnCollision() override;
+
 	// 衝突時に呼ばれる関数
-	void GetWorldPosition() override;
+	Vector3 GetWorldPosition() override;
 
 
 private:

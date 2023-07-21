@@ -56,7 +56,7 @@ public:
 	// 衝突時に呼ばれる関数
 	void OnCollision() override;
 	// 衝突時に呼ばれる関数
-	void GetWorldPosition() override;
+	Vector3 GetWorldPosition() override;
 
 private:
 	

@@ -37,7 +37,20 @@ void EnemyBullet::EnemyBulletOnColision()
 	isEnemyBulletDead_ = true; 
 }
 
-Vector3 EnemyBullet::GetWorldEnemyBulletPosition() {
+//Vector3 EnemyBullet::GetWorldEnemyBulletPosition() {
+//	Vector3 worldPos;
+//
+//	worldPos.x = worldEnemyBullet_.translation_.x;
+//	worldPos.y = worldEnemyBullet_.translation_.y;
+//	worldPos.z = worldEnemyBullet_.translation_.z;
+//	return worldPos;
+//}
+void EnemyBullet::OnCollision() 
+{
+	isEnemyBulletDead_ = true; 
+}
+Vector3 EnemyBullet::GetWorldPosition() 
+{
 	Vector3 worldPos;
 
 	worldPos.x = worldEnemyBullet_.translation_.x;

@@ -3,6 +3,7 @@
 #include "MathUtility.h"
 #include "Model.h"
 #include "EnemyBullet.h"
+#include "Collider.h"
 #include<list>
 
 // 自機クラスの前方宣言
@@ -47,7 +48,7 @@ public:
 	// 衝突時に呼ばれる関数
 	void OnCollision() override;
 	// 衝突時に呼ばれる関数
-	void GetWorldPosition() override;
+	Vector3 GetWorldPosition() override;
 
 
 private:

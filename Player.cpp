@@ -179,9 +179,19 @@ void Player::Attack()
 	}
 }
 
-void Player::PlayerOnColision() {}
+//void Player::PlayerOnColision() {}
 
-Vector3 Player::GetWorldPlayerPosition() {
+//Vector3 Player::GetWorldPlayerPosition() {
+//	Vector3 worldPos;
+//
+//	worldPos.x = worldTransform_.translation_.x;
+//	worldPos.y = worldTransform_.translation_.y;
+//	worldPos.z = worldTransform_.translation_.z;
+//	return worldPos;
+//}
+void Player::OnCollision() {}
+Vector3 Player::GetWorldPosition()
+{
 	Vector3 worldPos;
 
 	worldPos.x = worldTransform_.translation_.x;

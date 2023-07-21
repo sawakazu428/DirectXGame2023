@@ -38,12 +38,27 @@ void PlayerBullet::Draw(const ViewProjection& viewProjection)
 
 }
 
-void PlayerBullet::PlayerBulletOnColision()
+//void PlayerBullet::PlayerBulletOnColision()
+//{
+//	isPlayerBulletDead_ = true;
+//}
+//
+//Vector3 PlayerBullet::GetWorldPlayerBulletPosition() {
+//	Vector3 worldPos;
+//
+//	worldPos.x = worldPlayerBullet_.translation_.x;
+//	worldPos.y = worldPlayerBullet_.translation_.y;
+//	worldPos.z = worldPlayerBullet_.translation_.z;
+//	return worldPos;
+//}
+
+void PlayerBullet::OnCollision() 
 {
 	isPlayerBulletDead_ = true;
 }
 
-Vector3 PlayerBullet::GetWorldPlayerBulletPosition() {
+Vector3 PlayerBullet::GetWorldPosition() 
+{
 	Vector3 worldPos;
 
 	worldPos.x = worldPlayerBullet_.translation_.x;
