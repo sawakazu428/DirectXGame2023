@@ -38,7 +38,11 @@ public:
 	const float GetEnemyBulletRadius() { return enemyBulletRadius; }
 	const float enemyBulletRadius = 1.0f;
 
+		// 衝突時に呼ばれる関数
 	void OnCollision() override;
+	// 衝突時に呼ばれる関数
+	void GetWorldPosition() override;
+
 
 private:
 	// ワールドトランスフォーム

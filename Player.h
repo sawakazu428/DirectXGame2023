@@ -53,7 +53,10 @@ public:
 	const float GetPlayerRadius() { return playerRadius; }
 	const float playerRadius = 1.0f;
 
+	// 衝突時に呼ばれる関数
 	void OnCollision() override;
+	// 衝突時に呼ばれる関数
+	void GetWorldPosition() override;
 
 private:
 	
