@@ -220,3 +220,24 @@ void GameScene::CheckAllColisions()
 	}	
     #pragma endregion
 }
+
+void GameScene::CheckCollisionpair(Collider* colliderA, Collider* colliderB)
+{
+	Vector3 posA,posB;
+	posA = colliderA->GetWorldPosition(); // コライダーAのワールド座標を取得
+	posB = colliderB->GetWorldPosition(); // コライダーBのワールド座標を取得
+	float distance = (posB.x - posA.x) * (posB.x - posA.x) + (posB.y - posA.y) * (posB.y - posA.y) +
+	                 (posB.z - posA.z) * (posB.z - posA.z);
+
+	float length = (colliderA->GetRedius() + colliderB->GetRedius()) *
+	               (colliderA->GetRedius() + colliderB->GetRedius());
+
+	if (distance <= length)
+	{
+		// コライダーAの衝突時コールバックを呼び出す
+		colliderA->OnCollision();
+		// コライダーBの衝突時コールバックを呼び出す
+		colliderB->OnCollision();
+	}
+
+}

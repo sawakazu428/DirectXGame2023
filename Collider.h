@@ -13,5 +13,5 @@ public:
 	// 衝突時に呼ばれる関数
 	virtual void OnCollision();
 	// ワールド座標を取得
-	virtual void GetWorldPosition() = 0;
+	virtual Vector3 GetWorldPosition() = 0;
 };

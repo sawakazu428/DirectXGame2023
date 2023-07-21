@@ -48,6 +48,8 @@ public: // メンバ関数
 	/// </summary>
 	void CheckAllColisions();
 
+
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -70,7 +72,11 @@ private: // メンバ変数
 
 	// デバッグカメラ
 	DebugCamera* debugCamera_ = nullptr;
+
 	/// <summary>
-	/// ゲームシーン用
+	/// コライダー2つの衝突判定と応答
 	/// </summary>
+	/// <param name="colliderA">コライダーA</param>
+	/// <param name="colliderB">コライダーB</param>
+	void CheckCollisionpair(Collider* colliderA, Collider* colliderB);
 };
