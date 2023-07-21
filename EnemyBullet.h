@@ -5,8 +5,7 @@
 #include "WorldTransform.h"
 #include "cassert"
 
-class EnemyBullet 
-{
+class EnemyBullet : public Collider {
 public:
 	/// <summary>
 	/// 初期化
@@ -39,6 +38,7 @@ public:
 	const float GetEnemyBulletRadius() { return enemyBulletRadius; }
 	const float enemyBulletRadius = 1.0f;
 
+	void OnCollision() override;
 
 private:
 	// ワールドトランスフォーム

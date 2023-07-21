@@ -5,11 +5,11 @@
 #include "PlayerBullet.h"
 #include<list>
 #include "MathUtility.h"
-
+#include "Collider.h"
 /// <summary>
 /// 自キャラ
 /// </summary>
-class Player {
+class Player : public Collider {
 public:
 
 	/// <summary>
@@ -52,6 +52,8 @@ public:
 
 	const float GetPlayerRadius() { return playerRadius; }
 	const float playerRadius = 1.0f;
+
+	void OnCollision() override;
 
 private:
 	

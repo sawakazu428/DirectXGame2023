@@ -4,8 +4,7 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "cassert"
-class PlayerBullet 
-{
+class PlayerBullet : public Collider {
 public:
 	/// <summary>
 	/// 初期化
@@ -37,8 +36,9 @@ public:
 	const float GetPlayerBulletRadius() { return playerBulletRadius; }
 	const float playerBulletRadius = 1.0f;
 
+	void OnCollision() override;
 
-	private:
+private:
 	// ワールドトランスフォーム
 	WorldTransform worldPlayerBullet_;
 	// 3Dモデル

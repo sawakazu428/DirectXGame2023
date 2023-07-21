@@ -8,8 +8,7 @@
 // 自機クラスの前方宣言
 class Player;
 
-class Enemy
-{
+class Enemy : public Collider {
 public:
 	// 発射間隔
 	static const int kFireInterval = 60;
@@ -45,6 +44,8 @@ public:
 
 	const float GetEnemyRadius() { return enemyRadius; }
 	const float enemyRadius = 1.0f;
+
+	void OnCollision() override;
 
 private:
 	// 自キャラ
