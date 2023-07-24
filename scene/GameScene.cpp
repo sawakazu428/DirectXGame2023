@@ -140,6 +140,46 @@ void GameScene::CheckAllColisions()
 	// 敵弾リストの取得
 	const std::list<EnemyBullet*>& enemyBullets = enemy_->GetEnemyBullets();
 
+	// コライダー
+	std::list<Collider*> colliders_;
+
+	// コライダーをリストに登録
+	colliders_.push_back(player_);
+	colliders_.push_back(enemy_);
+
+	// 自弾全てについて
+	for (PlayerBullet* bullets : playerBullets)
+	{
+		colliders_.push_back(bullets);
+	}
+
+	for (EnemyBullet* bullets : enemyBullets)
+	{
+		colliders_.push_back(bullets);
+	}
+
+	// リスト内のペアを総当たり
+	std::list<Collider*>::iterator itrA = colliders_.begin();
+
+	for (; itrA != colliders_.end(); ++itrA)
+	{
+		// イテレーターAからコライダーAを取得する
+		Collider* A = *itrA;
+
+		// イテレーターBはイテレーターAの次の要素から回す(重複判定を回避)
+		std::list<Collider*>::iterator itrB = itrA;
+		itrB++;
+
+		for (; itrB != colliders_.end(); ++itrB)
+		{
+			// イテレーターBからコライダーBを取得する
+			Collider* B = *itrB;
+
+			// ペアの当たり判定
+			CheckCollisionpair(A, B);
+		}
+	}
+
 	#pragma region // 自キャラと敵弾の当たり判定
 	//// 自キャラのワールド座標
 	//posA = player_->GetWorldPlayerPosition();
@@ -167,10 +207,10 @@ void GameScene::CheckAllColisions()
 	//}	
 
 	// 敵弾全てについて
-	for (EnemyBullet* bullets : enemyBullets)
-	{
-		CheckCollisionpair(player_, bullets);
-	}
+	//for (EnemyBullet* bullets : enemyBullets)
+	//{
+	//	CheckCollisionpair(player_, bullets);
+	//}
 
 	#pragma endregion
 
@@ -197,9 +237,9 @@ void GameScene::CheckAllColisions()
 	//		bullets->PlayerBulletOnColision();
 	//	}
 	//}	
-	for (PlayerBullet* bullets : playerBullets) {
-		CheckCollisionpair(enemy_, bullets);
-	}
+	//for (PlayerBullet* bullets : playerBullets) {
+	//	CheckCollisionpair(enemy_, bullets);
+	//}
 
     #pragma endregion
 
@@ -229,14 +269,14 @@ void GameScene::CheckAllColisions()
 	//		}
 	//	}
 	//}	
-	for (PlayerBullet* pBullets : playerBullets) 
-	{
-		for (EnemyBullet* eBullets : enemyBullets)
-		{
-			CheckCollisionpair(eBullets, pBullets);
-		}
-		
-	}
+	//for (PlayerBullet* pBullets : playerBullets) 
+	//{
+	//	for (EnemyBullet* eBullets : enemyBullets)
+	//	{
+	//		CheckCollisionpair(eBullets, pBullets);
+	//	}
+	//	
+	//}
     #pragma endregion
 }
 
@@ -245,11 +285,20 @@ void GameScene::CheckCollisionpair(Collider* colliderA, Collider* colliderB)
 	Vector3 posA,posB;
 	posA = colliderA->GetWorldPosition(); // コライダーAのワールド座標を取得
 	posB = colliderB->GetWorldPosition(); // コライダーBのワールド座標を取得
+
+
 	float distance = (posB.x - posA.x) * (posB.x - posA.x) + (posB.y - posA.y) * (posB.y - posA.y) +
 	                 (posB.z - posA.z) * (posB.z - posA.z);
 
 	float length = (colliderA->GetRedius() + colliderB->GetRedius()) *
 	               (colliderA->GetRedius() + colliderB->GetRedius());
+
+	// 衝突のリファクタリング
+	if ((colliderA->GetCollisionAttribute() != colliderB->GetCollisionMask()) ||
+	    (colliderB->GetCollisionAttribute() != colliderA->GetCollisionMask()))
+	{
+		return;
+	}
 
 	if (distance <= length)
 	{

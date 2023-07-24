@@ -12,6 +12,11 @@ void EnemyBullet::Initialize(Model* model, const Vector3& pos, const Vector3& ve
 
 	// 引数で受け取った速度をメンバ変数に代入
 	velocityEnemyBullet_ = velocity;
+		// 衝突属性を設定
+	SetCollisionAttribute(kCollisionAttributePlayer);
+	// 衝突対象を自分の属性以外に設定
+	SetCollisionMask(kCollisionAttributeEnemy);
+
 }
 
 void EnemyBullet::Update() {

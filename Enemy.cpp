@@ -25,7 +25,10 @@ void Enemy::Initialize(Model* model, const Vector3& pos) {
 	velocityEnemy_ = {0, 0, 0.0f};
 
 	ApproachInitialze();
-
+	// 衝突属性を設定
+	SetCollisionAttribute(kCollisionAttributePlayer);
+	// 衝突対象を自分の属性以外に設定
+	SetCollisionMask(kCollisionAttributeEnemy);
 }
 
 void Enemy::ApproachInitialze() 
