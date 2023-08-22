@@ -14,13 +14,13 @@ void RailCamera::Update()
 	Vector3 move = {0.0f,0.0f,0.0f};
 	Vector3 rot = {0.0f, 0.000f, 0.0f};
 
-	railWorldTransform_.translation_.x += move.x;
+	/*railWorldTransform_.translation_.x += move.x;
 	railWorldTransform_.translation_.y += move.y;
 	railWorldTransform_.translation_.z += move.z;
 
 	railWorldTransform_.rotation_.x += rot.x;
 	railWorldTransform_.rotation_.y += rot.y;
-	railWorldTransform_.rotation_.z += rot.z;
+	railWorldTransform_.rotation_.z += rot.z;*/
 
 	railWorldTransform_.UpdateMatrix();
 

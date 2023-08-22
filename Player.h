@@ -62,6 +62,11 @@ public:
 	const float GetPlayerRadius() { return playerRadius; }
 	const float playerRadius = 1.0f;
 
+	// プレイヤー生存に関してのgetter達
+	const bool GetPlayerIsAlive() { return isAlive_; }
+	const int GetPlayerIsLife() { return isLife_; }
+	const bool GetPlayerIsInvicible() { return isInvicible_; }
+
 private:
 	
 	
@@ -87,5 +92,15 @@ private:
 	std::list<PlayerBullet*> playerBullets_;
 
 	Sprite* sprite2DReticle_ = nullptr;
+
+	bool isInvicible_ ;
+
+	bool isAlive_ ;
+
+	int isLife_;
+
+	float invicibleTime_;
+
+	float coolDown_;
 
 };
