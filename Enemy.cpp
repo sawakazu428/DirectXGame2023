@@ -33,8 +33,6 @@ void Enemy::ApproachInitialze()
 
 void Enemy::Update() 
 {
-  
-	
 
 	switch (phase_) {
 	case Phase::Approach:
