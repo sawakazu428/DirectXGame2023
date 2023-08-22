@@ -105,7 +105,7 @@ void Player::Update(ViewProjection& view) {
 			// クールダウンを戻す
 			coolDown_ = 120;
 			// 無敵時間を戻す
-			invicibleTime_ = 120;
+			invicibleTime_ = 90;
 		}
 
 		// キャラクター移動処理
