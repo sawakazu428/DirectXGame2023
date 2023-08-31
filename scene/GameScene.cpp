@@ -185,6 +185,7 @@ void GameScene::Update() {
 	case GameScene::Over:
 		if (input_->TriggerKey(DIK_SPACE)) 
 		{
+			clearTimer_ = 60 * 15;
 			scene = Title;
 		}
 		break;
