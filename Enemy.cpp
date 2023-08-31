@@ -10,7 +10,7 @@ void Enemy::Initialize(Model* model, const Vector3& pos) {
 	assert(model);
 	// 受け渡し
 	modelEnemy_ = model;
-	textureHandleEnemy_ = TextureManager::Load("uvChecker.png");
+	textureHandleEnemy_ = TextureManager::Load("Enemy.png");
 	// ワールド変換の初期化
 	worldTransformEnemy_.Initialize();
 	// 　引数で受け取った初期座標をセット
