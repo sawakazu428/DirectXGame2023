@@ -121,14 +121,18 @@ private: // メンバ変数
 	int32_t clearTimer_ = 60 * 15;
 
 	uint32_t textureHandleTitle_ = 0u;
+
 	Sprite* spriteTitle = nullptr;
 
 	uint32_t textureHandleClear_ = 0u;
+
 	Sprite* spriteClear = nullptr;
 
 	uint32_t textureHandleOver_ = 0u;
+
 	Sprite* spriteOver = nullptr;
 
 	uint32_t textureHandleManual_ = 0u;
+
 	Sprite* spriteManual = nullptr;
 };
