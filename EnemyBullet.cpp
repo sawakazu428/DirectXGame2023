@@ -4,7 +4,7 @@ void EnemyBullet::Initialize(Model* model, const Vector3& pos, const Vector3& ve
 
 	modelEnemyBullet_ = model;
 	// テクスチャ読み込み
-	textureHandleEnemyBullet_ = TextureManager::Load("white1x1.png");
+	textureHandleEnemyBullet_ = TextureManager::Load("EnemyBullet.png");
 
 	worldEnemyBullet_.Initialize();
 	// 　引数で受け取った初期座標をセット
