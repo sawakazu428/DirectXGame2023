@@ -72,6 +72,7 @@ public: // メンバ関数
 
 	enum Scene {
 		Title,
+		Manual,
 		Game,
 		Clear,
 		Over,
@@ -127,4 +128,7 @@ private: // メンバ変数
 
 	uint32_t textureHandleOver_ = 0u;
 	Sprite* spriteOver = nullptr;
+
+	uint32_t textureHandleManual_ = 0u;
+	Sprite* spriteManual = nullptr;
 };

@@ -36,11 +36,13 @@ void GameScene::Initialize()
 		textureHandleTitle_ = TextureManager::Load("Railshooting.png");
 		textureHandleClear_ = TextureManager::Load("GameClear.png");
 		textureHandleOver_ = TextureManager::Load("GameOver.png");
+		textureHandleManual_ = TextureManager::Load("Manual.png");
 
 		// スプライト生成
 		spriteTitle = Sprite::Create(textureHandleTitle_, {640, 360}, {1, 1, 1, 1}, {0.5f, 0.5f});
 		spriteClear = Sprite::Create(textureHandleClear_, {640, 360}, {1, 1, 1, 1}, {0.5f, 0.5f});
 		spriteOver = Sprite::Create(textureHandleOver_, {640, 360}, {1, 1, 1, 1}, {0.5f, 0.5f});
+		spriteManual = Sprite::Create(textureHandleManual_, {640, 360}, {1, 1, 1, 1}, {0.5f, 0.5f});
 
 		// 3Dモデルの作成
 		model_ = Model::Create();
@@ -95,6 +97,14 @@ void GameScene::Update() {
 
 		if (input_->TriggerKey(DIK_SPACE)) {
 			scene = Game;
+		}
+		if (input_->TriggerKey(DIK_M)) {
+			scene = Manual;
+		}
+		break;
+	case GameScene::Manual:
+		if (input_->TriggerKey(DIK_SPACE)) {
+			scene = Title;
 		}
 		break;
 	case GameScene::Game:
@@ -191,6 +201,20 @@ void GameScene::Draw() {
 
 		spriteTitle->Draw();
 
+		/// <summary>
+		/// ここに前景スプライトの描画処理を追加できる
+		/// </summary>
+
+		// スプライト描画後処理
+		Sprite::PostDraw();
+
+		break;
+
+	case GameScene::Manual:
+		// 前景スプライト描画前処理
+		Sprite::PreDraw(commandList);
+
+		spriteManual->Draw();
 		/// <summary>
 		/// ここに前景スプライトの描画処理を追加できる
 		/// </summary>
