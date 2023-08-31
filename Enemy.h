@@ -44,14 +44,12 @@ public:
 	// ワールド座標を取得
 	Vector3 GetWorldEnemyPosition();
 
-	bool GetIsLeave() { return isEnemyLeave_; }
+	bool GetIsDead() { return isEnemyDead_; }
 	// 弾リストを取得
 	//const std::list<EnemyBullet*>& GetEnemyBullets() { return enemyBullets_; }
 
 	const float GetEnemyRadius() { return enemyRadius; }
 	const float enemyRadius = 1.0f;
-
-	float GetEnemyScore() { return Score_; }
 
 private:
 	// 自キャラ
@@ -80,14 +78,8 @@ private:
 	// 寿命<frm>
 	static const int32_t kLifeTime = 60 * 5;
 
-	// 移動タイマー
-	int32_t leaveTimer_ = kLifeTime;
-	// 移動フラグ
-	bool isEnemyLeave_ = false;
-
+	// デスタイマー
+	int32_t deathTimer_ = kLifeTime;
 	// デスフラグ
 	bool isEnemyDead_ = false;
-
-	// 敵を倒したときに入る得点
-	float Score_ = 0.0f;
 };

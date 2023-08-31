@@ -56,11 +56,10 @@ void Enemy::Update()
 
 void Enemy::Draw(const ViewProjection& view)
 {
-	if (isEnemyDead_ == false)
-	{
-		modelEnemy_->Draw(worldTransformEnemy_, view, textureHandleEnemy_);
-	}	
 
+	modelEnemy_->Draw(worldTransformEnemy_, view, textureHandleEnemy_);
+
+	
 }
 
 
@@ -69,7 +68,7 @@ void Enemy::ApproachUpdate(const float kEnemySpeed) {
 	worldTransformEnemy_.translation_.z += kEnemySpeed;
 
 	// 規定の位置に到達したら離脱
-	if (worldTransformEnemy_.translation_.z < 30.0f) {
+	if (worldTransformEnemy_.translation_.z < 0.0f) {
 		phase_ = Phase::Leave;
 	}
 
@@ -85,9 +84,9 @@ void Enemy::ApproachUpdate(const float kEnemySpeed) {
 
 void Enemy::LeaveUpdate(const float kEnemySpeed) 
 {
-	if (leaveTimer_-- <= 0)
+	if (deathTimer_-- <= 0)
 	{
-		isEnemyLeave_ = true;
+		isEnemyDead_ = true;
 	}
 	// 移動(ベクトル加算)
 	worldTransformEnemy_.translation_.x += kEnemySpeed;
@@ -127,11 +126,7 @@ void Enemy::Fire()
 	gameScene_->AddEnemyBullet(newEnemyBullet);
 }
 
-void Enemy::EnemyOnColision() 
-{
-	isEnemyDead_ = true;
-	Score_ += 100;
-}
+void Enemy::EnemyOnColision() {}
 
 Vector3 Enemy::GetWorldEnemyPosition() 
 {

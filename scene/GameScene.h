@@ -72,13 +72,6 @@ public: // メンバ関数
 
 
 private: // メンバ変数
-	enum Scene
-	{
-		Title,
-		Game,
-		Clear,
-		Over,
-	};
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
@@ -111,5 +104,5 @@ private: // メンバ変数
 	// 待機フラグ
 	bool isWaitTime_ = false;
 	// 待機タイマー
-	int32_t waitTimer_ = 60
+	int32_t waitTimer_ = 60;
 };
