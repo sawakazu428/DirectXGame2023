@@ -32,15 +32,15 @@ void GameScene::Initialize()
 		audio_ = Audio::GetInstance();
 
 		// ファイル名を	指定してテクスチャを読み込む
-		textureHandle_ = TextureManager::Load("sample.png");
+		textureHandle_ = TextureManager::Load("Player.png");
 		textureHandleTitle_ = TextureManager::Load("Railshooting.png");
 		textureHandleClear_ = TextureManager::Load("GameClear.png");
 		textureHandleOver_ = TextureManager::Load("GameOver.png");
 
 		// スプライト生成
-		spriteTitle = Sprite::Create(textureHandleTitle_, {0, 0}, {1, 1, 1, 1}, {0.5f, 0.5f});
-		spriteClear = Sprite::Create(textureHandleClear_, {0, 0}, {1, 1, 1, 1}, {0.5f, 0.5f});
-		spriteOver = Sprite::Create(textureHandleOver_, {0, 0}, {1, 1, 1, 1}, {0.5f, 0.5f});
+		spriteTitle = Sprite::Create(textureHandleTitle_, {640, 360}, {1, 1, 1, 1}, {0.5f, 0.5f});
+		spriteClear = Sprite::Create(textureHandleClear_, {640, 360}, {1, 1, 1, 1}, {0.5f, 0.5f});
+		spriteOver = Sprite::Create(textureHandleOver_, {640, 360}, {1, 1, 1, 1}, {0.5f, 0.5f});
 
 		// 3Dモデルの作成
 		model_ = Model::Create();
@@ -82,7 +82,7 @@ void GameScene::Initialize()
 		// 軸方向表示が参照するビュープロジェクションを指定する(アドレス渡し)
 		AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 		
-		
+		clearTimer_ = 60 * 15;
 		break;
 
 	}
@@ -156,10 +156,18 @@ void GameScene::Update() {
 		{
 		    scene = Over;
 		}
+
+		clearTimer_--;
+
+		if (clearTimer_ <= 0)
+		{
+			scene = Clear;
+		}
 		break;
 	case GameScene::Clear:
 		if (input_->TriggerKey(DIK_SPACE)) 
 		{
+			clearTimer_ = 60 * 15;
 			scene = Title;
 		}
 
@@ -178,8 +186,18 @@ void GameScene::Draw() {
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 	switch (scene) {
 	case GameScene::Title:
+		// 前景スプライト描画前処理
+		Sprite::PreDraw(commandList);
 
-		//spriteTitle->Draw();
+		spriteTitle->Draw();
+
+		/// <summary>
+		/// ここに前景スプライトの描画処理を追加できる
+		/// </summary>
+
+		// スプライト描画後処理
+		Sprite::PostDraw();
+
 		break;
 	case GameScene::Game:
 
@@ -240,12 +258,30 @@ void GameScene::Draw() {
 #pragma endregion
 		break;
 	case GameScene::Clear:
+		// 前景スプライト描画前処理
+		Sprite::PreDraw(commandList);
+
 		spriteClear->Draw();
-		
+
+		/// <summary>
+		/// ここに前景スプライトの描画処理を追加できる
+		/// </summary>
+
+		// スプライト描画後処理
+		Sprite::PostDraw();
 		break;
 	case GameScene::Over:
+		// 前景スプライト描画前処理
+		Sprite::PreDraw(commandList);
+
 		spriteOver->Draw();
 
+		/// <summary>
+		/// ここに前景スプライトの描画処理を追加できる
+		/// </summary>
+
+		// スプライト描画後処理
+		Sprite::PostDraw();
 		break;
 	}
 }

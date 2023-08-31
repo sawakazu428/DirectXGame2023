@@ -117,14 +117,14 @@ private: // メンバ変数
 	// 待機タイマー
 	int32_t waitTimer_ = 60;
 
-	int32_t clearTimer = 60 * 15;
+	int32_t clearTimer_ = 60 * 15;
 
-	uint32_t textureHandleTitle_ = 0;
+	uint32_t textureHandleTitle_ = 0u;
 	Sprite* spriteTitle = nullptr;
 
-	uint32_t textureHandleClear_ = 0;
+	uint32_t textureHandleClear_ = 0u;
 	Sprite* spriteClear = nullptr;
 
-	uint32_t textureHandleOver_ = 0;
+	uint32_t textureHandleOver_ = 0u;
 	Sprite* spriteOver = nullptr;
 };
