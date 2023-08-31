@@ -7,6 +7,8 @@
 #include "MathUtility.h"
 #include "Matrix4x4.h"
 #include "Sprite.h"
+#include <ImGuiManager.h>
+
 
 
 
@@ -84,6 +86,7 @@ private:
 
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
+
 	// キーボード入力
 	Input* input_ = nullptr;
 
@@ -95,7 +98,7 @@ private:
 
 	bool isInvicible_ ;
 
-	bool isAlive_ ;
+	bool isAlive_;
 
 	int isLife_;
 

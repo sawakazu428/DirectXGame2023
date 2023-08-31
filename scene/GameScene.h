@@ -70,6 +70,15 @@ public: // メンバ関数
 	/// </summary>
 	void UpdateEnemyPopCommands();
 
+	enum Scene {
+		Title,
+		Game,
+		Clear,
+		Over,
+	};
+
+	Scene scene = Scene::Title;
+
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
@@ -77,6 +86,7 @@ private: // メンバ変数
 	Audio* audio_ = nullptr;
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0;
+	uint32_t textureHandleLife_ = 0;
 	// 3Dモデル
 	Model* model_ = nullptr;
 	Model* modelSkydome_ = nullptr;
@@ -93,6 +103,7 @@ private: // メンバ変数
 	// 敵複数
 	std::list<Enemy*> enemy_;
 	std::list<EnemyBullet*> enemyBullets_;
+
 	std::stringstream enemyPopCommands;
 
 	// デバッグカメラ有効
@@ -105,4 +116,15 @@ private: // メンバ変数
 	bool isWaitTime_ = false;
 	// 待機タイマー
 	int32_t waitTimer_ = 60;
+
+	int32_t clearTimer = 60 * 15;
+
+	uint32_t textureHandleTitle_ = 0;
+	Sprite* spriteTitle = nullptr;
+
+	uint32_t textureHandleClear_ = 0;
+	Sprite* spriteClear = nullptr;
+
+	uint32_t textureHandleOver_ = 0;
+	Sprite* spriteOver = nullptr;
 };

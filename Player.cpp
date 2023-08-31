@@ -28,6 +28,8 @@ void Player::Initialize(Model* model, uint32_t textureHandle, Vector3 pos) {
 	// レティクル用テクスチャ取得
 	uint32_t textureReticle = TextureManager::Load("target.png");
 
+
+
 	// スプライト生成
 	sprite2DReticle_ = Sprite::Create(textureReticle, {640, 360}, {1,1,1,1}, {0.5f, 0.5f});
 
@@ -229,6 +231,12 @@ void Player::Update(ViewProjection& view) {
 		// キャラクター攻撃処理
 		Attack();
 	}
+	if (isAlive_ == false)
+	{
+		isLife_ = 5;
+		isAlive_ = true;
+	}
+
 	#ifdef DEBUG
 	// キャラクターの座標を画面表示する処理
 	ImGui::Begin("Player");
@@ -320,6 +328,7 @@ void Player::PlayerOnColision()
 	if (isLife_ <= 0)
 	{
 		isAlive_ = false;
+	
 	}
 }
 
