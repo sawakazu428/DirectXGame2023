@@ -19,11 +19,17 @@ GameScene::~GameScene()
 	for (EnemyBullet* bullet : enemyBullets_) {
 		delete bullet;
 	}
+
 }
 
 
 void GameScene::Initialize() {
 
+	Scene scene = Scene::Title;
+
+	switch (scene) {
+	case GameScene::Title:
+	
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
@@ -42,7 +48,9 @@ void GameScene::Initialize() {
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_, playerPosition);
 
-	AddEnemy({0.0f, 5.0f, 30.0f});
+	AddEnemy({0.0f, 5.0f, 110.0f});
+	AddEnemy({5.0f, 0.0f, 110.0f});
+	AddEnemy({-5.0f, 0.0f, 110.0f});
 	
 	LoadEnemyPopData();
 
@@ -67,11 +75,30 @@ void GameScene::Initialize() {
 	AxisIndicator::GetInstance()->SetVisible(true);
 	// 軸方向表示が参照するビュープロジェクションを指定する(アドレス渡し)
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
+		break;
+	case GameScene::Game:
+		break;
+	case GameScene::Clear:
+		break;
+	case GameScene::Over:
+		break;
+	}
 
 }
 
 void GameScene::Update() {
+	Scene scene = Scene::Title;
 
+	switch (scene) {
+	case GameScene::Title:
+		
+		if (input_->TriggerKey(DIK_SPACE))
+		{
+			scene = Game;
+		}
+		break;
+	case GameScene::Game:
+	
 	player_->Update(viewProjection_);
 
 	debugCamera_->Update();
@@ -95,7 +122,7 @@ void GameScene::Update() {
 
 	enemy_.remove_if([](Enemy* enemy)
 	{
-		if (enemy->GetIsDead()) 
+		if (enemy->GetIsLeave()) 
 		{
 			delete enemy;
 			return true;
@@ -131,10 +158,28 @@ void GameScene::Update() {
 	
 	
 	CheckAllColisions();
+
+	/*if (player_->GetPlayerIsAlive() == false)
+	{
+		scene = Over;
+	}*/
+		break;
+	case GameScene::Clear:
+		break;
+	case GameScene::Over:
+		break;
+
+	}
 }
 
 void GameScene::Draw() {
+	Scene scene = Scene::Title;
 
+	switch (scene) {
+	case GameScene::Title:
+
+		break;
+	case GameScene::Game:
 	// コマンドリストの取得
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 
@@ -190,6 +235,15 @@ void GameScene::Draw() {
 	// スプライト描画後処理
 	Sprite::PostDraw();
 
+		break;
+	case GameScene::Clear:
+
+		break;
+	case GameScene::Over:
+
+		break;
+	
+	}
 #pragma endregion
 }
 
